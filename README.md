@@ -30,7 +30,6 @@ site Project Gutenburg
 | Retrieval | Finds passages similar to the question using vector search. | Uses the configured search method to retrieve graph-related context and/or community reports. |
 | Answer generation | Supplies retrieved passages to a language model. | Supplies the selected context to a language model. |
 
-GraphRAG supports different search methods. **The method evaluated here is [TODO: global, local, DRIFT, or another method actually used].** Describe its actual retrieval behavior rather than treating all GraphRAG searches as equivalent.
 
 ## Source Texts
 Both GraphRAG and VectorRAG used these documents listed below. These were verified to be free domain. No copyrighted material was used.

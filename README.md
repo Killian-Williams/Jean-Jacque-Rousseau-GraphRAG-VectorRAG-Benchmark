@@ -37,9 +37,11 @@ Both GraphRAG and VectorRAG used these documents listed below. These were verifi
 
 Below list of sources used:
 
-A Discourse Upon the Origin and the Foundation of the Inequality Among Mankind. Translator is unknown.  https://www.gutenberg.org/ebooks/5427
-The social contract & discourses. Translated by Cole, G. D. H. (George Douglas Howard).  https://www.gutenberg.org/ebooks/46333
-Emile. Translated by Barbara Foxley. https://www.gutenberg.org/ebooks/5427
+| Title | Translator | Source |
+|---|---|---|
+| *A Discourse Upon the Origin and the Foundation of the Inequality Among Mankind* | Unknown | [Project Gutenberg](https://www.gutenberg.org/ebooks/11136) |
+| *The Social Contract & Discourses* | G. D. H. Cole (George Douglas Howard) | [Project Gutenberg](https://www.gutenberg.org/ebooks/46333) |
+| *Emile* | Barbara Foxley | [Online Library of Liberty](https://oll.libertyfund.org/titles/rousseau-emile-or-education) |
 
 **Text preparation:**
 All sources were used in a .txt format for these systems to embed. 

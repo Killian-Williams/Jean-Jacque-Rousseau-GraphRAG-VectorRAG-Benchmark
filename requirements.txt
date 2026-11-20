@@ -1,0 +1,20 @@
+# Python 3.12.10
+# Direct dependencies pinned to the existing project environment.
+
+graphrag==3.1.2
+
+# Vector RAG
+chromadb==1.5.9
+langchain-chroma==1.1.0
+langchain-core==1.6.3
+langchain-openai==1.6.2
+langchain-text-splitters==1.1.2
+
+# API access and environment configuration
+openai==2.54.0
+python-dotenv==1.2.3
+
+# Graph and Parquet analysis
+networkx==3.6.1
+pandas==3.0.5
+pyarrow==25.0.1

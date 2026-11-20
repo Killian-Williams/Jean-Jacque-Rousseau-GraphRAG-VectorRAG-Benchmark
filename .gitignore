@@ -1,0 +1,41 @@
+# Credentials and local environment settings
+.env
+.env.*
+!.env.example
+
+# Python environments
+.venv/
+venv/
+env/
+
+# Python caches and build artifacts
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+build/
+dist/
+*.egg-info/
+
+# Generated GraphRAG indexes, caches, and logs
+/output/
+/update_output/
+/cache/
+/logs/
+*.log
+
+# Generated Chroma databases at any depth
+chroma_db/
+
+# Regenerable benchmark analysis
+/benchmark/analysis_results/
+
+# Editor and operating-system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+Desktop.ini

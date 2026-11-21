@@ -1,6 +1,6 @@
-## Overview
+## Rousseau: VectorRAG vs. GraphRAG
 The purpose of this project is to explore Microsoft's GraphRAG and VectorRAG ability to answer
-questions on Jean-Jacques Rousseau's political/philisophical corpus.
+questions on Jean-Jacques Rousseau's political/philosophical corpus.
 
 ## Thesis
 **How do these two systems compare when answering questions about themes and ideas that span multiple documents?**
@@ -10,10 +10,12 @@ as freedom, rights, and government.
 This project examines whether or not graph-based retrieval improves upon answer generation and also the 
 trade-offs compared to VectorRAG.
 
+**Takeaway:** In this 60-question benchmark, the LLM judge preferred GraphRAG in **77.08% of question-and-criterion comparisons**. Vector RAG was preferred for **directness** and answered much faster: **5.42 seconds** on average versus **656.38 seconds** for GraphRAG.
+
 ## Contribution
 
 Microsoft's GraphRAG system is used to a select books by Rousseau. The data was chosen from an open source
-site Project Gutenburg
+site Project Gutenberg
 
 - Collected and prepared the source texts for indexing.
 - Configured GraphRAG's models, text chunking, and prompts.
@@ -22,7 +24,7 @@ site Project Gutenburg
 - Built scripts to generate answers, evaluate their quality, and analyze response times.
 - Documented the strengths and limitations of each approach.
 
-## Breif Overview of How the Two Systems Work
+## Brief Overview of How the Two Systems Work
 
 | Stage | VectorRAG | GraphRAG |
 | --- | --- | --- |
@@ -30,10 +32,55 @@ site Project Gutenburg
 | Retrieval | Finds passages similar to the question using vector search. | Uses the configured search method to retrieve graph-related context and/or community reports. |
 | Answer generation | Supplies retrieved passages to a language model. | Supplies the selected context to a language model. |
 
+## Results
+
+The benchmark contains 60 questions: 20 on local fact retrieval, 20 on cross-document reasoning, and 20 on global sensemaking. The judge, `gpt-4.1-mini`, compares answers on four criteria, with three judgments per question and criterion. Majority voting produces 240 decisions from 720 judgments.
+
+```mermaid
+pie showData
+    title Judge preference across 240 question-and-criterion decisions
+    "GraphRAG (185 wins)" : 185
+    "Vector RAG (55 wins)" : 55
+```
+
+| Criterion | GraphRAG wins | Vector RAG wins |
+|---|---:|---:|
+| Comprehensiveness | 100.00% (60/60) | 0.00% (0/60) |
+| Diversity | 100.00% (60/60) | 0.00% (0/60) |
+| Empowerment | 83.33% (50/60) | 16.67% (10/60) |
+| Directness | 25.00% (15/60) | 75.00% (45/60) |
+| **Overall** | **77.08% (185/240)** | **22.92% (55/240)** |
+
+There were no ties or incomplete decisions. Overall percentages pool four criteria per question; they are not the percentage of questions answered correctly.
+
+| Recorded response time | Vector RAG | GraphRAG |
+|---|---:|---:|
+| Mean | 5.42 s | 656.38 s (10.94 min) |
+| Median | 5.05 s | 652.82 s (10.88 min) |
+
+GraphRAG timing includes launching its CLI for each question. These are measurements from this run, not general performance guarantees.
+
+**Interpretation:** The judge favored GraphRAG for breadth and detail, and vector RAG for directness. The judge compares the answers without checking their grounding against Rousseau's source passages, so these results do not establish factual accuracy or freedom from hallucination.
+
+See the [machine-readable summary](benchmark/analysis_results/summary.json), [criterion results](benchmark/analysis_results/metric_summary.csv), and [latency results](benchmark/analysis_results/latency_summary.csv).
+
+
+## Answer example
+
+**Question L01:** What does Rousseau mean by the general will?
+
+The following are opening excerpts from the saved answers, reproduced verbatim. They illustrate presentation style; they are not independently verified explanations of Rousseau.
+
+| Vector RAG | GraphRAG — global search |
+|---|---|
+| Rousseau's concept of the **General Will** refers to the collective will of the citizens that aims at the common good and is both universal in its object and commonly held by the community. | Jean-Jacques Rousseau's concept of the *general will* is a foundational and central idea in his political philosophy, representing the collective sovereignty of the people as a unified body aimed at the common good and public interest. |
+| **Recorded response time:** 16.867 s | **Recorded response time:** 705.086 s |
+
+The full vector answer continues with a numbered explanation. The full GraphRAG answer expands into sections on sovereignty, liberty, institutions, and private interests, with internal report references. Read both complete responses in the [vector answer file](benchmark/vector_answers.json) and [GraphRAG answer file](benchmark/graphrag_answers.json); search for `L01`.
+
 
 ## Source Texts
 Both GraphRAG and VectorRAG used these documents listed below. These were verified to be free domain. No copyrighted material was used.
-
 
 Below list of sources used:
 
@@ -42,6 +89,23 @@ Below list of sources used:
 | *A Discourse Upon the Origin and the Foundation of the Inequality Among Mankind* | Unknown | [Project Gutenberg](https://www.gutenberg.org/ebooks/11136) |
 | *The Social Contract & Discourses* | G. D. H. Cole (George Douglas Howard) | [Project Gutenberg](https://www.gutenberg.org/ebooks/46333) |
 | *Emile* | Barbara Foxley | [Online Library of Liberty](https://oll.libertyfund.org/titles/rousseau-emile-or-education) |
+
+## Explore the artifacts
+
+| Artifact | What it contains |
+|---|---|
+| [Benchmark questions](benchmark/questions.json) | All 60 questions, categories, and intended scope |
+| [Vector RAG answers](benchmark/vector_answers.json) | Generated responses and recorded latency |
+| [GraphRAG answers](benchmark/graphrag_answers.json) | Global-search responses and recorded latency |
+| [Raw judge evaluations](benchmark/evaluations.json) | Individual judgments used by the analysis |
+| [Summary JSON](benchmark/analysis_results/summary.json) | Overall results, category breakdowns, latency, and methodological notes |
+| [Question results](benchmark/analysis_results/question_results.csv) | Per-question, per-criterion majority outcomes |
+| [Criterion summary](benchmark/analysis_results/metric_summary.csv) | Win rates by evaluation criterion |
+| [Category summary](benchmark/analysis_results/category_summary.csv) | Results by question category |
+| [Category and criterion summary](benchmark/analysis_results/category_metric_summary.csv) | Detailed breakdown across both dimensions |
+| [Latency summary](benchmark/analysis_results/latency_summary.csv) | Mean and median response times |
+| [Analysis script](benchmark/analysis.py) | Code that regenerates the summaries |
+
 
 **Text preparation:**
 All sources were used in a .txt format for these systems to embed. 
@@ -141,6 +205,18 @@ A judge's preference alone does not establish factual accuracy.
 
 The evaluation recorded a preferred answer and a written explanation rather than a numerical quality score. Each question received three judge comparisons per criterion, producing 720 completed comparisons: 60 questions × 4 criteria × 3 runs.
 
+## Analyze saved results
+
+You can inspect every artifact above without API credentials. To regenerate the CSV and JSON summaries, use Python 3.12 and run this command from the repository root, the directory containing `benchmark/`:
+
+```powershell
+python benchmark/analysis.py
+```
+
+The script reads the saved questions, answers, and evaluations and writes to `benchmark/analysis_results/`. It makes no API calls and requires only the Python standard library for CSV/JSON output. If `matplotlib` is installed, it also generates a chart; otherwise it skips that chart.
+
+
+
 ## Limitations
 
 - Findings from this Rousseau corpus may not generalize to other authors or domains.
@@ -159,6 +235,11 @@ A list of suggestions to improve upon this project:
 - Compare additional GraphRAG search methods such as HypridRAG.
 - Analyze API cost.
 - Use up-to-date OpenAI models.
+- Adhere to a strict Human-in-the-loop workflow of the works by citation review.
+- Comparable context budgets, or an explicit experiment measuring their effect.
+- Investigate and measure the LLM-as-a-judge verbosity bias to ensure benchmark integrity.
+- Repeated timing measurements and separate indexing/query costs.
+- An explanation of how benchmark questions were authored and validated.
 
 ## References and Attribution
 

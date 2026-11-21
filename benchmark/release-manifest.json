@@ -1,0 +1,28 @@
+{
+  "release_tag": "v1.0.0",
+  "release_date": "2026-11-21",
+  "benchmark_name": "Rousseau_RAG_vs_GraphRAG_Benchmark",
+  "snapshot_id": "saved-results-sha256-cf0c30966e0ee847511157c1425e6b0c64d731e4911451eab8f87120f80829a6",
+  "original_execution_run_id": null,
+  "hash_scope": "UTF-8 text after universal newline normalization (CRLF/CR to LF); no other transformations",
+  "snapshot_hash_scope": "SHA-256 of artifact_sha256 mapping serialized as sorted-key compact JSON, UTF-8",
+  "artifact_sha256": {
+    "benchmark/questions.json": "4bb39fa122dfa32c460adb8e6685c7393b65f6a8a8757117f3914c8cfb0ea29d",
+    "benchmark/vector_answers.json": "d497d60b3a7b939eab0c918bac6976d293fd5862ca2ea36c4662d25fbba1e356",
+    "benchmark/graphrag_answers.json": "f68c09a91848dbbf71eb3b59ea6891b2a40ec17c39028dc4a76f4d6c2a0178fc",
+    "benchmark/evaluations.json": "a6d3651a405537a057fca497e8c4d163833f19aac1064a90d1af0eff4bf42773",
+    "benchmark/analysis.py": "c99f0234724bbbf11375c1055bcc30b0ca7cef249d78184e929ae57a0a7ed5cd",
+    "settings.yaml": "aa72de9f4f579350c0d84329c0fc3f4e713ec76dcec5e7edeebf0368a8df75af",
+    "corpus-manifest.json": "6ed12ac37ad70d30428cb95d2e2d3adf3f16e4c5176915094413430af31b1017",
+    "benchmark/analysis_results/category_metric_summary.csv": "40f89e0306e6a51edffc379c1fc7df6fa9bac15d9ce9f9c8060ce6d2a11d54c0",
+    "benchmark/analysis_results/category_summary.csv": "6a321148042e6fb369dee9bc7763281ee6f5d1ac32a5f110793b73227a798b3e",
+    "benchmark/analysis_results/latency_summary.csv": "6c8700e57973ab57be82e80021a1cd7d683b25078937750b797c1840ba9de8e0",
+    "benchmark/analysis_results/metric_summary.csv": "2f1a12d0f4864d2305559733e4c737589c74ee43d1d4e8ca936d9e0a6d21a65d",
+    "benchmark/analysis_results/question_results.csv": "9b24e1831ec1c668edd68a3e57574b9fc1d0d7ee52f51507a06aa15bee267724",
+    "benchmark/analysis_results/summary.json": "381794dfbee9fb76b6b1f498f0e8e41718ddf349ca3364c9b513dbe40de4b912"
+  },
+  "overall_graphrag_wins": 222,
+  "overall_vector_rag_wins": 18,
+  "evaluated_pairs": 240,
+  "provenance_status": "Original index-to-answer linkage and corpus equivalence remain unverified; see CORPUS_PROVENANCE.md."
+}

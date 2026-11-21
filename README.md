@@ -39,11 +39,9 @@ The benchmark uses **GraphRAG global search** for every question category. Throu
 |---|---|---|
 | *A Discourse Upon the Origin and the Foundation of the Inequality Among Mankind* | Unknown | [Project Gutenberg](https://www.gutenberg.org/ebooks/11136) |
 | *The Social Contract & Discourses* | G. D. H. Cole (George Douglas Howard) | [Project Gutenberg](https://www.gutenberg.org/ebooks/46333) |
-| *Emile* | Barbara Foxley | [Online Library of Liberty](https://oll.libertyfund.org/titles/rousseau-emile-or-education) |
+| *Emile* | Barbara Foxley (attributed; prepared-file edition unverified) | [Online Library of Liberty](https://oll.libertyfund.org/titles/rousseau-emile-or-education) |
 
-Both systems use the same prepared corpus. See [SOURCES.md](SOURCES.md) for source attribution and applicable notices.
-
-**Text preparation:** The texts were prepared as `.txt` files. The documented preparation removed introductions, headers, footers, and other material outside the selected Rousseau texts. Exact preprocessing steps and source-file checksums still need to be recorded for reproducibility.
+The repository provides three prepared text files for new builds. Historical corpus equivalence is unverified: surviving local indexes contain `reveries.txt`, and the saved answers do not identify their original index snapshots. The local indexed texts also retain introductions and other editorial material. See [SOURCES.md](SOURCES.md), [the provenance audit](CORPUS_PROVENANCE.md), and [the corpus manifest](corpus-manifest.json) for verified observations and unresolved edition/preprocessing details.
 
 ## Configuration
 
@@ -172,6 +170,12 @@ The script reads the saved questions, answers, and evaluations and writes to `be
 | [.gitignore](.gitignore) | Excludes credentials, environments, and generated artifacts. |
 
 Generated databases, caches, logs, and full indexing outputs are excluded. They can be recreated locally.
+
+## Automated checks
+
+Run `python scripts/check_repository.py` to verify configured prompt paths, JSON structure, matching benchmark/question IDs, evaluation coverage, saved-summary regeneration, and release artifact fingerprints. Run `python -m unittest discover -s tests -v` to exercise the failure checks. These commands use only Python's standard library and make no paid API calls. GitHub Actions runs them on pushes and pull requests.
+
+The [v1.0.0 release](https://github.com/Killian-Williams/Jean-Jacque-Rousseau-GraphRAG-VectorRAG-Benchmark/releases/tag/v1.0.0) preserves this saved-results snapshot. [Release metadata](benchmark/release-manifest.json) records artifact hashes; it does not establish the missing original index-to-answer linkage. See [release notes](RELEASE_NOTES.md).
 
 ## Limitations
 

@@ -30,8 +30,8 @@ dist/
 # Generated Chroma databases at any depth
 chroma_db/
 
-# Regenerable benchmark analysis
-/benchmark/analysis_results/
+# Published benchmark summaries are tracked.
+/benchmark/archive-*/
 
 # Editor and operating-system files
 .vscode/

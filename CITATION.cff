@@ -21,3 +21,7 @@ keywords:
   - Jean-Jacques Rousseau
   - benchmark
   - LLM evaluation
+
+repository-code: "https://github.com/Killian-Williams/Jean-Jacque-Rousseau-GraphRAG-VectorRAG-Benchmark"
+version: "1.0.0"
+date-released: 2026-11-21

@@ -1,0 +1,398 @@
+{
+  "manifest_version": 1,
+  "audit_date": "2026-11-21",
+  "status": "retrospective_partial_provenance",
+  "repository_commit": "6a97a5e3c25ca39b269487f1550767a4b6b2dbd2",
+  "checksum_algorithm": "SHA-256",
+  "benchmark_snapshots": [
+    {
+      "snapshot_id": "published-files-sha256-18bfddbfde22ca31c3c0e4c64f153144cf224a457ee00219792d09f112c60cbd",
+      "identifier_type": "retrospective artifact-set fingerprint; not an original execution/run ID",
+      "original_benchmark_run_id": null,
+      "index_linkage": "unverified: answer files do not record corpus manifest or index fingerprints",
+      "artifacts": [
+        {
+          "path": "benchmark/questions.json",
+          "bytes": 30769,
+          "sha256": "612ec52cc79cdfd1f0983f2a3e438c53ffc673198227178ad2ea88398b1b0c2c"
+        },
+        {
+          "path": "benchmark/vector_answers.json",
+          "bytes": 229765,
+          "sha256": "a041b9a0bbd3d242d7104ee2148783bf39d1b8d506039d229543d3c66de6b47e"
+        },
+        {
+          "path": "benchmark/graphrag_answers.json",
+          "bytes": 461464,
+          "sha256": "8d52fb54a10e59ddf71009743f2615580c39f7414b03961e2a48e120b0060882"
+        },
+        {
+          "path": "benchmark/evaluations.json",
+          "bytes": 880260,
+          "sha256": "49224d107a7cd65fd212d279d04ce0e1c421eb6e79e9f1f17ae5fdb8897e8c13"
+        }
+      ]
+    },
+    {
+      "snapshot_id": "earlier-local-files-sha256-fd55f7f1ea7a829b5a65628f695a2bac45c3d99c29f987d01bb8a310e0e10f43",
+      "identifier_type": "retrospective artifact-set fingerprint; not an original execution/run ID",
+      "original_benchmark_run_id": null,
+      "index_linkage": "unverified: answer files do not record corpus manifest or index fingerprints",
+      "artifacts": [
+        {
+          "path": "benchmark/questions.json",
+          "bytes": 29939,
+          "sha256": "4bb39fa122dfa32c460adb8e6685c7393b65f6a8a8757117f3914c8cfb0ea29d"
+        },
+        {
+          "path": "benchmark/vector_answers.json",
+          "bytes": 174056,
+          "sha256": "419a9fd249e6f7772cc42b5a72706febc84371c89c7114b4d303dcad2b1d02ae"
+        },
+        {
+          "path": "benchmark/graphrag_answers.json",
+          "bytes": 461464,
+          "sha256": "8d52fb54a10e59ddf71009743f2615580c39f7414b03961e2a48e120b0060882"
+        },
+        {
+          "path": "benchmark/evaluations.json",
+          "bytes": 851391,
+          "sha256": "21d337b906e4a6a3fc0e2c9d5bc0c8dc23280163ab8226b9a6d11ba7162b4800"
+        }
+      ]
+    }
+  ],
+  "files": [
+    {
+      "path": "RAG application/data/discourse.txt",
+      "bytes": 150648,
+      "sha256": "cfdfab5b43afccd8946cb389781ec0318444670f1574404bd24c10761f057463",
+      "origin": "repository_snapshot",
+      "work": "Discourse on the Origin and Foundation of Inequality",
+      "sections": "Question heading and discourse text; Second Part marker present. Complete-edition coverage not verified.",
+      "translation": "Unknown in supplied attribution",
+      "preprocessing": {
+        "recorded_recipe": null,
+        "status": "unknown historical operations; current bytes fingerprinted without modification",
+        "observed_headings": []
+      }
+    },
+    {
+      "path": "RAG application/data/emile.txt",
+      "bytes": 268333,
+      "sha256": "b138fdd3c94b8af279b5dd3679bec1ffc3c9a152e427420b19c28f787305552e",
+      "origin": "repository_snapshot",
+      "work": "Emile (selection; edition unverified)",
+      "sections": "BOOK FIRST, BOOK SECOND, BOOK THIRD headings; includes overview/commentary and notes. Do not describe as verified complete Emile.",
+      "translation": "Barbara Foxley attributed by maintainer; exact file-to-edition correspondence unverified",
+      "preprocessing": {
+        "recorded_recipe": null,
+        "status": "unknown historical operations; current bytes fingerprinted without modification",
+        "observed_headings": [
+          "BOOK FIRST.",
+          "BOOK SECOND.",
+          "BOOK THIRD."
+        ]
+      }
+    },
+    {
+      "path": "RAG application/data/Social_Contract.txt",
+      "bytes": 622781,
+      "sha256": "f4abb98dd476921bd4f4c01264024d881ffc45035348b23bd514a7f103ff96fd",
+      "origin": "repository_snapshot",
+      "work": "The Social Contract & Discourses",
+      "sections": "Foreword; Social Contract Books I-IV; Arts and Sciences discourse; Inequality discourse; Political Economy discourse. Section boundaries and omissions not exhaustively verified.",
+      "translation": "G. D. H. Cole attributed by maintainer",
+      "preprocessing": {
+        "recorded_recipe": null,
+        "status": "unknown historical operations; current bytes fingerprinted without modification",
+        "observed_headings": [
+          "FOREWORD",
+          "BOOK I",
+          "BOOK II",
+          "BOOK III",
+          "BOOK IV",
+          "PREFACE",
+          "PREFACE"
+        ]
+      }
+    },
+    {
+      "path": "input/discourse.txt",
+      "bytes": 150648,
+      "sha256": "cfdfab5b43afccd8946cb389781ec0318444670f1574404bd24c10761f057463",
+      "origin": "surviving_local_workspace",
+      "work": "Discourse on the Origin and Foundation of Inequality",
+      "sections": "Question heading and discourse text; Second Part marker present. Complete-edition coverage not verified.",
+      "translation": "Unknown in supplied attribution",
+      "preprocessing": {
+        "recorded_recipe": null,
+        "status": "unknown historical operations; current bytes fingerprinted without modification",
+        "observed_headings": []
+      }
+    },
+    {
+      "path": "input/emile.txt",
+      "bytes": 268333,
+      "sha256": "b138fdd3c94b8af279b5dd3679bec1ffc3c9a152e427420b19c28f787305552e",
+      "origin": "surviving_local_workspace",
+      "work": "Emile (selection; edition unverified)",
+      "sections": "BOOK FIRST, BOOK SECOND, BOOK THIRD headings; includes overview/commentary and notes. Do not describe as verified complete Emile.",
+      "translation": "Barbara Foxley attributed by maintainer; exact file-to-edition correspondence unverified",
+      "preprocessing": {
+        "recorded_recipe": null,
+        "status": "unknown historical operations; current bytes fingerprinted without modification",
+        "observed_headings": [
+          "BOOK FIRST.",
+          "BOOK SECOND.",
+          "BOOK THIRD."
+        ]
+      }
+    },
+    {
+      "path": "input/hi.txt",
+      "bytes": 721450,
+      "sha256": "eba123addf5b65e7365d69c516d55dfb022fb10c7d330f3491ccce382f614b63",
+      "origin": "surviving_local_workspace",
+      "work": "The Social Contract & Discourses",
+      "sections": "Stored index text contains title/publisher material, G. D. H. Cole credit, introduction, Social Contract and discourses. Current file differs from stored index text.",
+      "translation": "G. D. H. Cole identified in stored index text",
+      "preprocessing": {
+        "recorded_recipe": null,
+        "status": "unknown historical operations; current bytes fingerprinted without modification",
+        "observed_headings": [
+          "INTRODUCTION",
+          "INTRODUCTION",
+          "BOOK I",
+          "FOREWORD",
+          "BOOK II",
+          "BOOK III",
+          "BOOK IV",
+          "FOREWORD",
+          "BOOK I",
+          "BOOK II",
+          "BOOK III",
+          "BOOK IV",
+          "PREFACE",
+          "PREFACE"
+        ]
+      }
+    },
+    {
+      "path": "input/reveries.txt",
+      "bytes": 270291,
+      "sha256": "1d282f9f358041af87664d46f5eab02b05a898d948fb807e7571e301aed843cf",
+      "origin": "surviving_local_workspace",
+      "work": "Reveries of the Solitary Walker (identification from file content)",
+      "sections": "INTRODUCTION and FIRST through TENTH WALK headings; exact edition and completeness unverified.",
+      "translation": "Unverified; source URL not established",
+      "preprocessing": {
+        "recorded_recipe": null,
+        "status": "unknown historical operations; current bytes fingerprinted without modification",
+        "observed_headings": [
+          "INTRODUCTION",
+          "FIRST WALK",
+          "SECOND WALK",
+          "THIRD WALK",
+          "FOURTH WALK",
+          "FIFTH WALK",
+          "SIXTH WALK",
+          "SEVENTH WALK",
+          "EIGHTH WALK",
+          "NINTH WALK",
+          "TENTH WALK"
+        ]
+      }
+    },
+    {
+      "path": "RAG application/data/discourse.txt",
+      "bytes": 150648,
+      "sha256": "cfdfab5b43afccd8946cb389781ec0318444670f1574404bd24c10761f057463",
+      "origin": "surviving_local_workspace",
+      "work": "Discourse on the Origin and Foundation of Inequality",
+      "sections": "Question heading and discourse text; Second Part marker present. Complete-edition coverage not verified.",
+      "translation": "Unknown in supplied attribution",
+      "preprocessing": {
+        "recorded_recipe": null,
+        "status": "unknown historical operations; current bytes fingerprinted without modification",
+        "observed_headings": []
+      }
+    },
+    {
+      "path": "RAG application/data/emile.txt",
+      "bytes": 268333,
+      "sha256": "b138fdd3c94b8af279b5dd3679bec1ffc3c9a152e427420b19c28f787305552e",
+      "origin": "surviving_local_workspace",
+      "work": "Emile (selection; edition unverified)",
+      "sections": "BOOK FIRST, BOOK SECOND, BOOK THIRD headings; includes overview/commentary and notes. Do not describe as verified complete Emile.",
+      "translation": "Barbara Foxley attributed by maintainer; exact file-to-edition correspondence unverified",
+      "preprocessing": {
+        "recorded_recipe": null,
+        "status": "unknown historical operations; current bytes fingerprinted without modification",
+        "observed_headings": [
+          "BOOK FIRST.",
+          "BOOK SECOND.",
+          "BOOK THIRD."
+        ]
+      }
+    },
+    {
+      "path": "RAG application/data/reveries.txt",
+      "bytes": 270291,
+      "sha256": "1d282f9f358041af87664d46f5eab02b05a898d948fb807e7571e301aed843cf",
+      "origin": "surviving_local_workspace",
+      "work": "Reveries of the Solitary Walker (identification from file content)",
+      "sections": "INTRODUCTION and FIRST through TENTH WALK headings; exact edition and completeness unverified.",
+      "translation": "Unverified; source URL not established",
+      "preprocessing": {
+        "recorded_recipe": null,
+        "status": "unknown historical operations; current bytes fingerprinted without modification",
+        "observed_headings": [
+          "INTRODUCTION",
+          "FIRST WALK",
+          "SECOND WALK",
+          "THIRD WALK",
+          "FOURTH WALK",
+          "FIFTH WALK",
+          "SIXTH WALK",
+          "SEVENTH WALK",
+          "EIGHTH WALK",
+          "NINTH WALK",
+          "TENTH WALK"
+        ]
+      }
+    },
+    {
+      "path": "RAG application/data/Social_Contract.txt",
+      "bytes": 622781,
+      "sha256": "f4abb98dd476921bd4f4c01264024d881ffc45035348b23bd514a7f103ff96fd",
+      "origin": "surviving_local_workspace",
+      "work": "The Social Contract & Discourses",
+      "sections": "Foreword; Social Contract Books I-IV; Arts and Sciences discourse; Inequality discourse; Political Economy discourse. Section boundaries and omissions not exhaustively verified.",
+      "translation": "G. D. H. Cole attributed by maintainer",
+      "preprocessing": {
+        "recorded_recipe": null,
+        "status": "unknown historical operations; current bytes fingerprinted without modification",
+        "observed_headings": [
+          "FOREWORD",
+          "BOOK I",
+          "BOOK II",
+          "BOOK III",
+          "BOOK IV",
+          "PREFACE",
+          "PREFACE"
+        ]
+      }
+    }
+  ],
+  "surviving_indexes": {
+    "graphrag": {
+      "origin": "surviving_local_workspace",
+      "artifact": {
+        "path": "output/documents.parquet",
+        "bytes": 912744,
+        "sha256": "6113118cff05ffc96e4ca733fed0b901a04c4e615e7004469723aaac0d5e0bf0"
+      },
+      "documents": [
+        {
+          "filename": "hi.txt",
+          "document_id": "2ac3f78f7c17dc8b4d5ad214f6fc30dbb90d556a6e3e1918295b331b22837d05b550573b5b08f83c1c6a8ab760a268435c76159fcb68c03dda8849b14b815f02",
+          "text_sha256_utf8": "191790b003d831bc3634e96677078c7495d795100e25b4e8579e3b4e18da7e5e",
+          "hash_scope": "stored document text encoded as UTF-8; not original input-file bytes",
+          "text_units": 320,
+          "matches_current_input_text_after_python_universal_newline_read": false,
+          "sections": "Stored index text contains title/publisher material, G. D. H. Cole credit, introduction, Social Contract and discourses. Current file differs from stored index text."
+        },
+        {
+          "filename": "discourse.txt",
+          "document_id": "8662ef839ded58e4ff0e2bda5fdca56898a356680bb35210b99e2501e7fb0404bb49c8193b3b6bbb10dba316462589e14580d071e374d9e5c414223c4d03654e",
+          "text_sha256_utf8": "03b0afb73357351e9563c9ad79343cbfcedcc6e0575e9c228e5d20346cc5ec5b",
+          "hash_scope": "stored document text encoded as UTF-8; not original input-file bytes",
+          "text_units": 62,
+          "matches_current_input_text_after_python_universal_newline_read": true,
+          "sections": "Question heading and discourse text; Second Part marker present. Complete-edition coverage not verified."
+        },
+        {
+          "filename": "emile.txt",
+          "document_id": "f26c04414cd34238573111a6390b71c941cb14f83ed0012e281f5630c066671c9949910990da30fc37278fdc4ca42b2caed0ad690299b642c54eb137ac307835",
+          "text_sha256_utf8": "a9245727028a557782303ad4c657d92dc2ca1ced27c26db9a51aeb6e3a9221ff",
+          "hash_scope": "stored document text encoded as UTF-8; not original input-file bytes",
+          "text_units": 115,
+          "matches_current_input_text_after_python_universal_newline_read": true,
+          "sections": "BOOK FIRST, BOOK SECOND, BOOK THIRD headings; includes overview/commentary and notes. Do not describe as verified complete Emile."
+        },
+        {
+          "filename": "reveries.txt",
+          "document_id": "a9077196e85614360c2d2939893efc20ebab23a6d8f3335c67e7e4a9a339dccc11f13f26c072f436b7b15a3428e8f02bf335fca6e63f94db51009d4a8e965273",
+          "text_sha256_utf8": "1d282f9f358041af87664d46f5eab02b05a898d948fb807e7571e301aed843cf",
+          "hash_scope": "stored document text encoded as UTF-8; not original input-file bytes",
+          "text_units": 114,
+          "matches_current_input_text_after_python_universal_newline_read": true,
+          "sections": "INTRODUCTION and FIRST through TENTH WALK headings; exact edition and completeness unverified."
+        }
+      ],
+      "reveries_included": true,
+      "published_answer_linkage": "unverified"
+    },
+    "vector_rag": {
+      "origin": "surviving_local_workspace",
+      "path": "chroma_db/chroma.sqlite3",
+      "collections": [
+        "spinoza_collection"
+      ],
+      "source_chunks": [
+        {
+          "filename": "Social_Contract.txt",
+          "chunks": 1972,
+          "chunks_matching_current_source_as_exact_substring": 1712,
+          "chunk_texts_sha256": "1e8e30289000687a1b9e7af14f2c7691b466767931ce8b69dc00fb17f35fa0af",
+          "hash_scope": "JSON array of stored chunk texts ordered by metadata ID, UTF-8"
+        },
+        {
+          "filename": "discourse.txt",
+          "chunks": 406,
+          "chunks_matching_current_source_as_exact_substring": 406,
+          "chunk_texts_sha256": "b24627bb29a235f3ea5808f0c2c604f3e149ccb49cc3089c0b864618dae3f960",
+          "hash_scope": "JSON array of stored chunk texts ordered by metadata ID, UTF-8"
+        },
+        {
+          "filename": "emile.txt",
+          "chunks": 792,
+          "chunks_matching_current_source_as_exact_substring": 792,
+          "chunk_texts_sha256": "1fd5a3c3f194cf8ff843cb38f90549b8bbbad90f9009a475225a212c3bc5904b",
+          "hash_scope": "JSON array of stored chunk texts ordered by metadata ID, UTF-8"
+        },
+        {
+          "filename": "reveries.txt",
+          "chunks": 748,
+          "chunks_matching_current_source_as_exact_substring": 748,
+          "chunk_texts_sha256": "23100ab1d0b878f4f77878569124834c9aaca2510a91fc9c49c43eaa40c5d5a1",
+          "hash_scope": "JSON array of stored chunk texts ordered by metadata ID, UTF-8"
+        }
+      ],
+      "reveries_included": true,
+      "published_answer_linkage": "unverified"
+    },
+    "other_chroma_database": {
+      "path": "RAG application/chroma_db/chroma.sqlite3",
+      "collection": "spinoza_collection",
+      "source": "data/spinoza.txt",
+      "chunks": 1479,
+      "status": "different local index; not evidence of Rousseau benchmark corpus"
+    }
+  },
+  "history": {
+    "reveries_removed_commit": "179d0f6",
+    "benchmark_files_added_commit": "ee8ad44",
+    "reveries_added_commit": "894606e",
+    "interpretation": "Removal is later than answer artifact upload; it does not establish reindexing or historical exclusion."
+  },
+  "unresolved": [
+    "Original execution IDs and index-to-answer linkage",
+    "Exact historical source bytes for GraphRAG hi.txt and all Chroma Social_Contract.txt chunks",
+    "Exact Emile edition/translator and extent",
+    "Reveries source edition, translator, URL",
+    "Reproducible preprocessing recipe and original download hashes",
+    "Whether both published systems used identical prepared text"
+  ]
+}

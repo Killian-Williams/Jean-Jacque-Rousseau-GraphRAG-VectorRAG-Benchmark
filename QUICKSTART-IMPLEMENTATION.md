@@ -1,3 +1,76 @@
+from pathlib import Path
+import shutil
+
+PROJECT_DIR = Path(__file__).resolve().parents[1]
+SOURCE_DIR = PROJECT_DIR / "RAG application" / "data"
+INPUT_DIR = PROJECT_DIR / "input"
+FILENAMES = ("Social_Contract.txt", "emile.txt", "discourse.txt")
+
+
+def main():
+    files = [SOURCE_DIR / name for name in FILENAMES]
+    for path in files:
+        if not path.read_text(encoding="utf-8").strip():
+            raise ValueError(f"Empty source document: {path}")
+
+    INPUT_DIR.mkdir(parents=True, exist_ok=True)
+    extras = {p.name for p in INPUT_DIR.glob("*.txt")} - set(FILENAMES)
+    if extras:
+        raise ValueError(f"Move unrelated input texts out of input/: {sorted(extras)}")
+
+    for path in files:
+        destination = INPUT_DIR / path.name
+        shutil.copyfile(path, destination)
+        print(f"Prepared {destination.relative_to(PROJECT_DIR)}")
+
+
+if __name__ == "__main__":
+    main()
+```
+
+This keeps both systems on the same prepared corpus. If you change corpus filenames, update this list too.
+
+## 6. Add the following quick start to the README
+
+The commands below assume the edits above have been committed. Place this section before your configuration details.
+
+---
+
+## Quick start
+
+Use Python **3.12** (the original project environment used 3.12.10) and Git. Run all commands from the repository root, which contains `settings.yaml` and `benchmark/`. Indexing, question answering, and LLM evaluation use paid API calls. Analyzing saved results does not.
+
+### Clone and install
+
+```shell
+git clone https://github.com/Killian-Williams/Jean-Jacque-Rousseau-GraphRAG-VectorRAG-Benchmark.git
+cd Jean-Jacque-Rousseau-GraphRAG-VectorRAG-Benchmark
+```
+
+Windows PowerShell:
+
+```powershell
+py -3.12 -m venv .venv
+.\.venv\Scripts\Activate.ps1
+```
+
+macOS/Linux:
+
+```bash
+python3.12 -m venv .venv
+source .venv/bin/activate
+```
+
+Then, in either shell:
+
+```shell
+python -m pip install -r requirements.txt
+python -m pip check
+```
+
+Keep this environment activated for the remaining commands, including those that invoke `graphrag`.
+
+
 
 ```shell
 python -m pip install -r requirements.txt

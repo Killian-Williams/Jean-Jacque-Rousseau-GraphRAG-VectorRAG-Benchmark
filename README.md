@@ -2,6 +2,10 @@
 The purpose of this project is to explore Microsoft's GraphRAG and VectorRAG ability to answer
 questions on Jean-Jacques Rousseau's political/philosophical corpus.
 
+This benchmark uses GraphRAG's **global search** method for all 60
+questions. Throughout this README, “GraphRAG” refers to this configuration.
+Other GraphRAG search methods were not evaluated.
+
 ## Thesis
 **How do these two systems compare when answering questions about themes and ideas that span multiple documents?**
 
@@ -29,7 +33,7 @@ site Project Gutenberg
 | Stage | VectorRAG | GraphRAG |
 | --- | --- | --- |
 | Preparation | Splits source texts into passages and embeds them. | Splits texts, extracts entities and relationships, and builds a graph and community reports. |
-| Retrieval | Finds passages similar to the question using vector search. | Uses the configured search method to retrieve graph-related context and/or community reports. |
+| Retrieval | Finds passages similar to the question using vector search. | Uses global search over community reports generated during GraphRAG indexing. |
 | Answer generation | Supplies retrieved passages to a language model. | Supplies the selected context to a language model. |
 
 ## Results
@@ -117,13 +121,13 @@ Record the settings used for the reported benchmark, including settings that dif
 
 | Setting | VectorRAG | GraphRAG |
 | --- | --- | --- |
-| Framework and version | LangChain with langchain_openai, langchain_chroma, and langchain_text_splitters; Chroma vector database. Versions not recorded in the supplied files. | Microsoft GraphRAG v3.2.0 |
+| Framework and version | LangChain with langchain_openai, langchain_chroma, and langchain_text_splitters; Chroma vector database. | Microsoft GraphRAG v3.1.2 |
 | Embedding model | text-embedding-3-large | text-embedding-3-large |
 | Answer-generation model | gpt-4.1-mini with temperature=0 | gpt-4.1-mini |
 | Indexing / extraction model | Not applicable unless used | gpt-4.1-mini for graph extraction, description summarization, and community report generation |
 | Chunk size and unit | 500 characters, using RecursiveCharacterTextSplitter | 600 tokens, using the o200k_base encoding |
 | Chunk overlap and unit | Configured overlap of 100 characters | 100 tokens |
-| Retrieval settings | Chroma vector store at chroma_db, collection spinoza_collection. Uses similarity_search_with_score(k=5) to retrieve up to five passages. No score threshold or reranking is applied. | LanceDB vector store at output\lancedb. Local, global, DRIFT, and basic search are configured. The method used in the benchmark, community level, and query context limits are not specified in this file. |
+| Retrieval settings | Chroma vector store at chroma_db, collection rousseau_collection. Uses similarity_search_with_score(k=5) to retrieve up to five passages. No score threshold or reranking is applied. | Global search, selected by QUERY_METHOD = "global" in benchmark/run_graphrag.py and passed to the CLI as --method global. Community level and query context limits are not explicitly set by the benchmark runner. |
 | Answer instructions | PROMPT_TEMPLATE in rag_chain.py: base answers on retrieved excerpts, address the question directly, explain concepts clearly, connect ideas when supported, distinguish evidence from interpretation, and avoid unsupported claims or invented quotations and citations. Answer partially when evidence is incomplete; explicitly state insufficient information when no answer is supported. | Search-specific prompt files in prompts/, listed below. Their instructions and evidence rules require inspecting those files. |
 
 See `settings.yaml` for further details.

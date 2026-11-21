@@ -257,6 +257,15 @@ For VectorRAG framework, check the link below:
 **Research Paper**
 https://arxiv.org/abs/2005.11401
 
+## License
+
+The project's original code is licensed under the
+[Apache License 2.0](LICENSE).
+
+The Rousseau source texts and translations are separate from the
+project's original code. See [Source attribution](SOURCES.md)
+for their sources and applicable notices.
+
 ## Author
 
 Killian K. Williams

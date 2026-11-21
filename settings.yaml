@@ -125,7 +125,7 @@ global_search:
 drift_search:
   completion_model_id: default_completion_model
   embedding_model_id: default_embedding_model
-  prompt: "prompts/drift_reduce_prompt.txt.txt"
+  prompt: "prompts/drift_reduce_prompt.txt"
   reduce_prompt: "prompts/drift_reduce_prompt.txt.txt"
 
 basic_search:

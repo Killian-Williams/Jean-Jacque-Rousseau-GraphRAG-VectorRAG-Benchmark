@@ -4,7 +4,8 @@ message: >-
   using the metadata below. Cite the Rousseau source editions separately;
   attribution is provided in SOURCES.md.
 type: software
-title: "Rousseau: Vector RAG vs. GraphRAG"
+license: Apache-2.0
+title: "Rousseau: VectorRAG vs. GraphRAG"
 authors:
   - family-names: "Williams"
     given-names: "Killian K."

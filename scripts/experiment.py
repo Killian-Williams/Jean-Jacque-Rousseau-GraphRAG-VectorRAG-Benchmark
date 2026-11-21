@@ -1,5 +1,6 @@
 """Create isolated, fingerprinted runs; paid stages require --allow-api."""
 import argparse
+from contextlib import closing
 from datetime import datetime, timezone
 import hashlib
 import json
@@ -39,6 +40,26 @@ def tree_hash(path):
         raise ValueError(f"Empty index: {path}")
     value = hashlib.sha256(json.dumps(files, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
     return {"id": "sha256:" + value, "files": files}
+
+
+def chroma_content_hash(path):
+    """Ignore SQLite layout and Chroma's acquire_write lock bookkeeping only."""
+    def cell(value):
+        return {"bytes": value.hex()} if isinstance(value, bytes) else value
+    with closing(sqlite3.connect((path / "chroma.sqlite3").as_uri() + "?mode=ro", uri=True)) as db:
+        schema = db.execute("SELECT type,name,tbl_name,sql FROM sqlite_master ORDER BY type,name").fetchall()
+        tables = {}
+        for (name,) in db.execute("SELECT name FROM sqlite_master WHERE type='table' ORDER BY name"):
+            if name == "acquire_write":
+                continue
+            quoted = '"' + name.replace('"', '""') + '"'
+            rows = [json.dumps([cell(v) for v in row], sort_keys=True, separators=(",", ":"))
+                    for row in db.execute("SELECT * FROM " + quoted)]
+            tables[name] = sorted(rows)
+    files = hashes((p for p in path.rglob("*") if p.is_file() and p.name not in
+                    {"chroma.sqlite3", "chroma.sqlite3-wal", "chroma.sqlite3-shm", "chroma.sqlite3-journal"}), path)
+    content = {"schema": schema, "tables": tables, "files": files}
+    return "sha256:" + hashlib.sha256(json.dumps(content, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
 
 
 def run_path(run_id):
@@ -82,8 +103,18 @@ def verify_snapshot(path, manifest):
         if hashlib.sha256((path / name).read_bytes()).hexdigest() != expected:
             raise ValueError(f"Run snapshot changed: {name}; create a new run")
     for stage, directory in (("index-vector", "chroma_db"), ("index-graph", "output")):
-        if stage in manifest["indexes"] and tree_hash(path / directory) != manifest["indexes"][stage]:
-            raise ValueError(f"Index changed after build: {directory}; create a new run")
+        if stage not in manifest["indexes"]:
+            continue
+        expected = manifest["indexes"][stage]
+        if stage == "index-vector" and "content_id" in expected:
+            if chroma_content_hash(path / directory) != expected["content_id"]:
+                raise ValueError("Chroma indexed content changed after build")
+        else:
+            if tree_hash(path / directory) != expected:
+                raise ValueError(f"Index changed after build: {directory}; create a new run")
+            if stage == "index-vector":
+                # Establish the logical fingerprint only while original bytes still match.
+                expected["content_id"] = chroma_content_hash(path / directory)
     for record in manifest["stages"].values():
         for name, expected in record.get("artifact_sha256", {}).items():
             if hashlib.sha256((path / name).read_bytes()).hexdigest() != expected:
@@ -155,6 +186,14 @@ def execute(path, stage, allow_api=False):
         "analyze": [[sys.executable, "-I", "-S", "benchmark/analysis.py"]],
     }
     record = {"status": "running", "started_at": now(), "commands": commands[stage]}
+    executor = Path(__file__)
+    executor_hash = hashlib.sha256(executor.read_bytes()).hexdigest()
+    revision = path / "execution-revisions" / (executor_hash + ".py")
+    revision.parent.mkdir(exist_ok=True)
+    if not revision.exists():
+        shutil.copyfile(executor, revision)
+    record["executor_sha256"] = executor_hash
+    record["executor_archive"] = revision.relative_to(path).as_posix()
     manifest["stages"][stage] = record
     save(path / "run.json", manifest)
     try:
@@ -184,6 +223,7 @@ def execute(path, stage, allow_api=False):
                         raise ValueError("Evaluation incomplete; inspect the run logs")
                 data["provenance"] = {"run_id": manifest["run_id"], "corpus_id": manifest["corpus"]["corpus_id"],
                                       "index_ids": {k: v["id"] for k, v in manifest["indexes"].items()},
+                                      "index_content_ids": {k: v.get("content_id", v["id"]) for k, v in manifest["indexes"].items()},
                                       "source_commit": manifest["source_commit"],
                                       "snapshot_sha256": manifest["snapshot_sha256"]}
                 save(output, data)

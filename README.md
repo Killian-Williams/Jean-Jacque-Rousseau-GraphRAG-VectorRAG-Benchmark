@@ -241,6 +241,11 @@ A list of suggestions to improve upon this project:
 - Repeated timing measurements and separate indexing/query costs.
 - An explanation of how benchmark questions were authored and validated.
 
+## Source texts
+
+See [Source attribution](SOURCES.md) for the Rousseau texts,
+translators, and original download links
+
 ## References and Attribution
 
 This project uses Microsoft's GraphRAG framework. The framework and underlying research belong to their respective authors; this repository documents my application and evaluation of the approach.

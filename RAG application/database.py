@@ -7,7 +7,7 @@ from langchain_chroma import Chroma
 load_dotenv()
 
 CHROMA_PATH = "chroma_db"
-COLLECTION_NAME = "spinoza_collection"
+COLLECTION_NAME = "rousseau_collection"
 
 
 def get_embedding_function():

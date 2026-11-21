@@ -140,7 +140,8 @@ def check_release(root):
     require(manifest["release_tag"] and manifest["snapshot_id"], "Missing release identifiers")
     for name, expected in manifest["artifact_sha256"].items():
         # Hash normalized text to remain stable under Git's CRLF checkout conversion.
-        data = (root / name).read_text(encoding="utf-8").encode("utf-8")
+        snapshot_path = manifest.get("archived_paths", {}).get(name, name)
+        data = (root / snapshot_path).read_text(encoding="utf-8").encode("utf-8")
         require(hashlib.sha256(data).hexdigest() == expected, f"Release artifact changed: {name}")
 
 

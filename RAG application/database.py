@@ -1,12 +1,14 @@
 # database.py
 
+from pathlib import Path
 from dotenv import load_dotenv
 from langchain_openai import OpenAIEmbeddings
 from langchain_chroma import Chroma
 
-load_dotenv()
+PROJECT_DIR = Path(__file__).resolve().parents[1]
+load_dotenv(PROJECT_DIR / ".env")
 
-CHROMA_PATH = "chroma_db"
+CHROMA_PATH = PROJECT_DIR / "chroma_db"
 COLLECTION_NAME = "rousseau_collection"
 
 
@@ -27,7 +29,7 @@ def get_vector_store():
 
     vector_store = Chroma(
         collection_name=COLLECTION_NAME,
-        persist_directory=CHROMA_PATH,
+        persist_directory=str(CHROMA_PATH),
         embedding_function=embedding_function
     )
 

@@ -4,9 +4,9 @@ from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
 
-from database import get_vector_store
+from database import PROJECT_DIR, get_vector_store
 
-load_dotenv()
+load_dotenv(PROJECT_DIR / ".env")
 
 
 PROMPT_TEMPLATE = """

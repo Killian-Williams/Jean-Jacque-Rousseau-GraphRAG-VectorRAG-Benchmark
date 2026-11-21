@@ -1,10 +1,12 @@
 # Rousseau: Vector RAG vs. GraphRAG
 
+[![Repository checks](https://github.com/Killian-Williams/Jean-Jacque-Rousseau-GraphRAG-VectorRAG-Benchmark/actions/workflows/checks.yml/badge.svg)](https://github.com/Killian-Williams/Jean-Jacque-Rousseau-GraphRAG-VectorRAG-Benchmark/actions/workflows/checks.yml)
+
 A comparison of Microsoft's GraphRAG and a vector RAG baseline for answering questions about Jean-Jacques Rousseau's political and philosophical writings.
 
 **Takeaway:** The saved evaluation favors GraphRAG on all four criteria, while vector RAG answers substantially faster. See [Results](#results) for the figures and their limitations.
 
-[How it works](#how-it-works) · [Source texts](#source-texts) · [Evaluation method](#evaluation-method) · [Results](#results) · [Answer example](#answer-example) · [Artifacts](#explore-the-artifacts) · [Offline analysis](#analyze-saved-results)
+[Quick start](#quick-start) · [How it works](#how-it-works) · [Source texts](#source-texts) · [Evaluation method](#evaluation-method) · [Results](#results) · [Answer example](#answer-example) · [Artifacts](#explore-the-artifacts) · [Offline analysis](#analyze-saved-results)
 
 ## Research question
 
@@ -24,6 +26,22 @@ This project applies Microsoft's GraphRAG to selected works by Rousseau and comp
 - Documented the strengths and limitations of each approach.
 
 ## How it works
+
+```mermaid
+flowchart LR
+    S[Repository source selections] --> P[Prepare and hash identical input files]
+    P --> V[Chroma passage index]
+    P --> G[Graph and community reports]
+    Q[Same 60 questions] --> VA[Vector RAG answers]
+    Q --> GA[GraphRAG global search answers]
+    V --> VA
+    G --> GA
+    VA --> J[Three judge votes per criterion]
+    GA --> J
+    J --> A[Saved evaluations and offline analysis]
+```
+
+This is the workflow for new controlled runs. The original indexes behind the published results have not been conclusively identified.
 
 The benchmark uses **GraphRAG global search** for every question category. Throughout this README, GraphRAG refers to that configuration; other search methods were not evaluated.
 
@@ -80,6 +98,8 @@ Answers were compared by `gpt-4.1-mini` using the criteria in [the evaluator](be
 Each judgment records a preferred answer (or a tie) and a written explanation, rather than a numerical quality score. The three judgments are aggregated into one majority decision for each question and criterion. Failed calls do not count as votes. The judge sees the question and the two answers, without source passages or verified reference answers.
 
 ## Results
+
+**Correction:** These figures supersede an earlier artifact set reporting 77.08% GraphRAG preference. The current set reports 92.50%, including a reversal of the directness result; the saved vector answers and judge evaluations changed. This is a corrected saved-results snapshot, not a newly controlled benchmark. See the [release notes](RELEASE_NOTES.md).
 
 ```mermaid
 pie showData
@@ -148,6 +168,91 @@ The full vector answer continues with further explanation. The full GraphRAG ans
 | [Latency summary](benchmark/analysis_results/latency_summary.csv) | Mean and median response times |
 | [Analysis script](benchmark/analysis.py) | Code that regenerates the summaries |
 
+## Quick start
+
+Use **Python 3.12** and Git. Run all commands from the **repository root**, which contains `settings.yaml`, `benchmark/`, and `scripts/`. Direct dependencies are pinned in [requirements.txt](requirements.txt); each controlled run also records the installed transitive package versions. No existing indexes are required.
+
+### 1. Clone and install
+
+```sh
+git clone https://github.com/Killian-Williams/Jean-Jacque-Rousseau-GraphRAG-VectorRAG-Benchmark.git
+cd Jean-Jacque-Rousseau-GraphRAG-VectorRAG-Benchmark
+```
+
+Windows PowerShell:
+
+```powershell
+py -3.12 -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install -r requirements.txt
+python -m pip check
+Copy-Item .env.example .env
+```
+
+macOS/Linux:
+
+```sh
+python3.12 -m venv .venv
+. .venv/bin/activate
+python -m pip install -r requirements.txt
+python -m pip check
+cp .env.example .env
+```
+
+If PowerShell blocks activation, use `.\.venv\Scripts\python.exe` in place of `python` in subsequent commands. Installation requires internet access and can take several minutes or longer, depending on downloads. The full GraphRAG dependency tree is large.
+
+### 2. Prepare and check the corpus (no API calls)
+
+```sh
+python scripts/prepare_data.py
+python scripts/prepare_data.py --check
+python "RAG application/ingest.py" --dry-run
+python scripts/check_repository.py
+python -m unittest discover -s tests -v
+```
+
+Preparation copies the three committed selections into `input/`, normalizes UTF-8 BOMs and line endings, and writes `input/manifest.json` with SHA-256 hashes and a corpus ID. Both systems read these same files. Extra input texts are rejected. Dry-run ingestion validates and splits them without writing a database or requesting embeddings. These checks normally take seconds after installation. They establish input-byte equality, not completeness or authenticity of the source editions; see [corpus provenance](CORPUS_PROVENANCE.md).
+
+### 3. Configure credentials and create an isolated run
+
+For live generation, edit your local `.env`: set `OPENAI_API_KEY` for vector RAG, and `GRAPHRAG_API_KEY` for GraphRAG and judging. Both can use the same funded OpenAI key. The committed [.env.example](.env.example) contains blank credentials and the judge defaults. `.env` is ignored by Git. Do not run `graphrag init`: this repository already supplies its configuration and prompts.
+
+```sh
+python scripts/experiment.py create --run-id rousseau-001
+```
+
+This command makes **no API calls**. It creates `runs/rousseau-001/` containing copies of the source selections, prepared input, code, questions, prompts, and settings, plus `run.json`. Choose a new ID for each experiment. Published answers under `benchmark/` remain separate. The run metadata records the source commit, corpus hashes, configuration hashes, index identifiers, stage timestamps, installed packages, and output hashes as the run progresses. Keep the whole run directory when archiving results.
+
+### 4. Build both indexes and ask a sample question (paid)
+
+**Live testing and the new benchmark are deferred until API funding and reliable internet are available.** The commands below are the executable path for that later run; successful end-to-end live generation has not yet been verified.
+
+```sh
+python scripts/experiment.py index-vector --run-id rousseau-001 --allow-api
+python scripts/experiment.py index-graph --run-id rousseau-001 --allow-api
+python scripts/experiment.py sample --run-id rousseau-001 --allow-api
+```
+
+Expected outputs inside the run directory: `chroma_db/`, GraphRAG `output/` (including `documents.parquet` and community reports), and `sample-0.log` / `sample-1.log` answering “What does Rousseau mean by the general will?” Indexing time and API cost were not measured in the historical run; allow substantial time and monitor the provider's usage dashboard. Historical mean question times were about 7 seconds for vector RAG and 11 minutes for GraphRAG, with no guarantee for a new run.
+
+### 5. Generate answers, evaluate, and analyze
+
+```sh
+python scripts/experiment.py answers --run-id rousseau-001 --allow-api
+python scripts/experiment.py evaluate --run-id rousseau-001 --allow-api
+python scripts/experiment.py analyze --run-id rousseau-001
+```
+
+`answers` runs all 60 questions through both systems. `evaluate` requests three judge votes for each of four criteria: 720 judgments before retries. Both stages incur API charges. The historical GraphRAG question run alone took roughly 11 hours; vector questions took roughly 7 minutes in total. Evaluation duration and total cost are unmeasured. Analysis takes seconds and makes no API calls.
+
+Outputs are `runs/rousseau-001/benchmark/vector_answers.json`, `graphrag_answers.json`, `evaluations.json`, and `analysis_results/summary.json` plus CSV tables. Stage logs sit beside `run.json`. Each paid stage requires `--allow-api`; snapshots and completed outputs are checked before later stages. An attempted stage cannot be rerun in place: preserve failed logs and create a new run ID. Index changes also stop the run for inspection. Do not directly run the original benchmark generators at the repository root, as they write over the published filenames.
+
+To regenerate analysis again after a completed run, use:
+
+```sh
+python -I -S runs/rousseau-001/benchmark/analysis.py
+```
+
 ## Analyze saved results
 
 You can inspect every artifact above without API credentials. To regenerate the CSV and JSON summaries, use Python 3.12 and run this command from the repository root, the directory containing `benchmark/`:
@@ -173,7 +278,7 @@ Generated databases, caches, logs, and full indexing outputs are excluded. They 
 
 ## Automated checks
 
-Run `python scripts/check_repository.py` to verify configured prompt paths, JSON structure, matching benchmark/question IDs, evaluation coverage, saved-summary regeneration, and release artifact fingerprints. Run `python -m unittest discover -s tests -v` to exercise the failure checks. These commands use only Python's standard library and make no paid API calls. GitHub Actions runs them on pushes and pull requests.
+Run `python scripts/check_repository.py` to verify configured prompt paths, JSON structure, matching benchmark/question IDs, evaluation coverage, saved-summary regeneration, and release artifact fingerprints. Run `python -m unittest discover -s tests -v` to exercise the failure checks, preparation, and paid-stage guard. These commands use only Python's standard library and make no paid API calls. GitHub Actions also installs the pinned dependencies and runs corpus preparation and ingestion dry-run on Python 3.12. These checks do not establish successful live indexing or generation.
 
 The [v1.0.0 release](https://github.com/Killian-Williams/Jean-Jacque-Rousseau-GraphRAG-VectorRAG-Benchmark/releases/tag/v1.0.0) preserves this saved-results snapshot. [Release metadata](benchmark/release-manifest.json) records artifact hashes; it does not establish the missing original index-to-answer linkage. See [release notes](RELEASE_NOTES.md).
 

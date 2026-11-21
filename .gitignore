@@ -39,3 +39,7 @@ chroma_db/
 .DS_Store
 Thumbs.db
 Desktop.ini
+
+# Prepared corpus and isolated experiments
+/input/
+/runs/

@@ -48,15 +48,9 @@ Raw file checksums hash exact bytes. Stored GraphRAG text checksums hash extract
 
 Manifest origin `repository_snapshot` refers to the audited Git checkout. `surviving_local_workspace` refers to the inspected Desktop `Rousseau_GraphRAG` directory. The manifest captures observations; its local index evidence is not currently bundled in Git.
 
-## README replacement
+## Historical documentation correction
 
-Replace claims that both published systems used the same three-work corpus and that all introductions were removed with:
-
-> The repository currently provides three prepared text files for new index builds. Historical corpus provenance is incomplete: surviving local GraphRAG and Chroma indexes both contain `reveries.txt`, and their Social Contract inputs do not match the current files consistently. The saved answers do not identify their original index snapshots, so we cannot confirm the exact corpus or identical preprocessing for the published comparison. See [Corpus provenance](CORPUS_PROVENANCE.md) and the [corpus manifest](corpus-manifest.json) for checksums, observed contents, and unresolved questions.
-
-Retain the numerical results as results of the saved evaluation, but add this limitation:
-
-> Corpus equivalence between the published systems is unverified. Differences in source coverage or preprocessing may contribute to the measured preferences, alongside retrieval architecture and prompting.
+The earlier README claims of identical historical corpora and complete removal of editorial material were withdrawn after this audit. The current README links here instead. These observations concern the historical saved results; the new preparation and experiment scripts do not retroactively resolve their provenance.
 
 ## Establishing a fully reproducible future run
 

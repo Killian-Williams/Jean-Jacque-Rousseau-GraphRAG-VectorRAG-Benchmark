@@ -24,5 +24,9 @@
   "overall_graphrag_wins": 222,
   "overall_vector_rag_wins": 18,
   "evaluated_pairs": 240,
-  "provenance_status": "Original index-to-answer linkage and corpus equivalence remain unverified; see CORPUS_PROVENANCE.md."
+  "provenance_status": "Original index-to-answer linkage and corpus equivalence remain unverified; see CORPUS_PROVENANCE.md.",
+  "archived_paths": {
+    "settings.yaml": "benchmark/release-config/v1.0.0/settings.yaml"
+  },
+  "archive_note": "Historical configuration is archived so current setup can evolve without changing the v1.0.0 artifact fingerprint."
 }

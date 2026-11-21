@@ -1,0 +1,26 @@
+cff-version: 1.2.0
+message: >-
+  If you use this software or its benchmark results, please cite this project
+  using the metadata below. Cite the Rousseau source editions separately;
+  attribution is provided in SOURCES.md.
+type: software
+title: "Rousseau: Vector RAG vs. GraphRAG"
+authors:
+  - family-names: "Williams"
+    given-names: "Killian K."
+abstract: >-
+  A comparison of vector-based retrieval-augmented generation and GraphRAG
+  global search over English translations of Jean-Jacques Rousseau's writings.
+  The project includes a 60-question benchmark, saved system answers,
+  LLM-as-a-judge evaluations, and analysis of answer preferences and latency.
+keywords:
+  - retrieval-augmented generation
+  - GraphRAG
+  - vector search
+  - Jean-Jacques Rousseau
+  - benchmark
+  - LLM evaluation
+# Author name taken from the existing input/README.md.
+# Add repository-code when the public repository URL is confirmed.
+# Add version and date-released when a tagged release is published.
+# Add a DOI if one is assigned, and license once adoption is confirmed.

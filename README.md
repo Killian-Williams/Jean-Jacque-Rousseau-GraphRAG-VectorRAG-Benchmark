@@ -1,73 +1,125 @@
-## Rousseau: VectorRAG vs. GraphRAG
-The purpose of this project is to explore Microsoft's GraphRAG and VectorRAG ability to answer
-questions on Jean-Jacques Rousseau's political/philosophical corpus.
+# Rousseau: Vector RAG vs. GraphRAG
 
-This benchmark uses GraphRAG's **global search** method for all 60
-questions. Throughout this README, “GraphRAG” refers to this configuration.
-Other GraphRAG search methods were not evaluated.
+A comparison of Microsoft's GraphRAG and a vector RAG baseline for answering questions about Jean-Jacques Rousseau's political and philosophical writings.
 
-## Thesis
+**Takeaway:** The saved evaluation favors GraphRAG on all four criteria, while vector RAG answers substantially faster. See [Results](#results) for the figures and their limitations.
+
+[How it works](#how-it-works) · [Source texts](#source-texts) · [Evaluation method](#evaluation-method) · [Results](#results) · [Answer example](#answer-example) · [Artifacts](#explore-the-artifacts) · [Offline analysis](#analyze-saved-results)
+
+## Research question
+
 **How do these two systems compare when answering questions about themes and ideas that span multiple documents?**
 
-Rousseau's writings was chosen because his corpus contains multiple works that has the same overall theming/concept such
-as freedom, rights, and government.
-This project examines whether or not graph-based retrieval improves upon answer generation and also the 
-trade-offs compared to VectorRAG.
-
-**Takeaway:** In this 60-question benchmark, the LLM judge preferred GraphRAG in **77.08% of question-and-criterion comparisons**. Vector RAG was preferred for **directness** and answered much faster: **5.42 seconds** on average versus **656.38 seconds** for GraphRAG.
+Rousseau's writings were chosen because his works explore recurring themes such as freedom, rights, education, and government. This project examines whether graph-based retrieval improves generated answers and what trade-offs it introduces compared with vector RAG.
 
 ## Contribution
 
-Microsoft's GraphRAG system is used to a select books by Rousseau. The data was chosen from an open source
-site Project Gutenberg
+This project applies Microsoft's GraphRAG to selected works by Rousseau and compares it with a vector RAG baseline.
 
 - Collected and prepared the source texts for indexing.
 - Configured GraphRAG's models, text chunking, and prompts.
-- Implemented a VectorRAG baseline using Python, LangChain, and Chroma database.
-- Developed a benchmark question set covering specific details and broader political/philosophical themes.
-- Built scripts to generate answers, evaluate their quality, and analyze response times.
+- Implemented the vector RAG baseline using Python, LangChain, and Chroma.
+- Developed questions covering specific details and broader philosophical themes.
+- Built scripts for answer generation, evaluation, and response-time analysis.
 - Documented the strengths and limitations of each approach.
 
-## Brief Overview of How the Two Systems Work
+## How it works
 
-| Stage | VectorRAG | GraphRAG |
+The benchmark uses **GraphRAG global search** for every question category. Throughout this README, GraphRAG refers to that configuration; other search methods were not evaluated.
+
+| Stage | Vector RAG | GraphRAG |
 | --- | --- | --- |
 | Preparation | Splits source texts into passages and embeds them. | Splits texts, extracts entities and relationships, and builds a graph and community reports. |
 | Retrieval | Finds passages similar to the question using vector search. | Uses global search over community reports generated during GraphRAG indexing. |
 | Answer generation | Supplies retrieved passages to a language model. | Supplies the selected context to a language model. |
 
-## Results
+## Source texts
 
-The benchmark contains 60 questions: 20 on local fact retrieval, 20 on cross-document reasoning, and 20 on global sensemaking. The judge, `gpt-4.1-mini`, compares answers on four criteria, with three judgments per question and criterion. Majority voting produces 240 decisions from 720 judgments.
+| Title | Translator | Source |
+|---|---|---|
+| *A Discourse Upon the Origin and the Foundation of the Inequality Among Mankind* | Unknown | [Project Gutenberg](https://www.gutenberg.org/ebooks/11136) |
+| *The Social Contract & Discourses* | G. D. H. Cole (George Douglas Howard) | [Project Gutenberg](https://www.gutenberg.org/ebooks/46333) |
+| *Emile* | Barbara Foxley | [Online Library of Liberty](https://oll.libertyfund.org/titles/rousseau-emile-or-education) |
+
+Both systems use the same prepared corpus. See [SOURCES.md](SOURCES.md) for source attribution and applicable notices.
+
+**Text preparation:** The texts were prepared as `.txt` files. The documented preparation removed introductions, headers, footers, and other material outside the selected Rousseau texts. Exact preprocessing steps and source-file checksums still need to be recorded for reproducibility.
+
+## Configuration
+
+| Setting | Vector RAG | GraphRAG |
+| --- | --- | --- |
+| Framework and version | LangChain with langchain_openai, langchain_chroma, and langchain_text_splitters; Chroma vector database. | Microsoft GraphRAG v3.1.2 |
+| Embedding model | text-embedding-3-large | text-embedding-3-large |
+| Answer-generation model | gpt-4.1-mini with temperature=0 | gpt-4.1-mini |
+| Indexing / extraction model | Not used | gpt-4.1-mini for graph extraction, description summarization, and community report generation |
+| Chunk size and unit | 500 characters, using RecursiveCharacterTextSplitter | 600 tokens, using the o200k_base encoding |
+| Chunk overlap and unit | Configured overlap of 100 characters | 100 tokens |
+| Retrieval settings | Chroma vector store at chroma_db, collection rousseau_collection. Uses similarity_search_with_score(k=5) to retrieve up to five passages. No score threshold or reranking is applied. | Global search, selected by QUERY_METHOD = "global" in benchmark/run_graphrag.py and passed to the CLI as --method global. Community level and query context limits are not explicitly set by the benchmark runner. |
+| Answer instructions | PROMPT_TEMPLATE in rag_chain.py: base answers on retrieved excerpts, address the question directly, explain concepts clearly, connect ideas when supported, distinguish evidence from interpretation, and avoid unsupported claims or invented quotations and citations. Answer partially when evidence is incomplete; explicitly state insufficient information when no answer is supported. | [Global map](prompts/global_search_map_system_prompt.txt), [reduce](prompts/global_search_reduce_system_prompt.txt), and [knowledge](prompts/global_search_knowledge_system_prompt.txt) prompts. |
+
+See [settings.yaml](settings.yaml) and the [vector answer chain](RAG%20application/rag_chain.py) for further details.
+
+## Evaluation method
+
+The benchmark contains 60 questions that are evenly divided into three categories:
+
+| Category | Questions | Purpose |
+| --- | --- | --- |
+| local_fact_retrieval | 20 | Retrieve specific definitions, concepts, or explanations from an individual work. |
+| cross_document_reasoning | 20 | Connect and compare ideas across multiple works. |
+| global_sensemaking | 20 | Synthesize broad themes and relationships across Rousseau’s writings. |
+
+Answers were compared by `gpt-4.1-mini` using the criteria in [the evaluator](benchmark/evaluate.py). Each question received three judgments per criterion. Answer order alternates deterministically across runs to reduce position bias.
+
+| Criterion | What the evaluator assesses |
+|---|---|
+| Comprehensiveness | Coverage of the question's important aspects and details, without unnecessary repetition or irrelevant material. |
+| Diversity | The range of relevant perspectives, concepts, connections, and insights. |
+| Empowerment | How well the answer helps readers understand the topic and make informed judgments through clear explanations, reasoning, and useful supporting detail. |
+| Directness | How specifically and clearly the answer addresses the question without unnecessary material. |
+
+Each judgment records a preferred answer (or a tie) and a written explanation, rather than a numerical quality score. The three judgments are aggregated into one majority decision for each question and criterion. Failed calls do not count as votes. The judge sees the question and the two answers, without source passages or verified reference answers.
+
+## Results
 
 ```mermaid
 pie showData
     title Judge preference across 240 question-and-criterion decisions
-    "GraphRAG (185 wins)" : 185
-    "Vector RAG (55 wins)" : 55
+    "GraphRAG (222 wins)" : 222
+    "Vector RAG (18 wins)" : 18
 ```
 
 | Criterion | GraphRAG wins | Vector RAG wins |
 |---|---:|---:|
 | Comprehensiveness | 100.00% (60/60) | 0.00% (0/60) |
 | Diversity | 100.00% (60/60) | 0.00% (0/60) |
-| Empowerment | 83.33% (50/60) | 16.67% (10/60) |
-| Directness | 25.00% (15/60) | 75.00% (45/60) |
-| **Overall** | **77.08% (185/240)** | **22.92% (55/240)** |
+| Empowerment | 95.00% (57/60) | 5.00% (3/60) |
+| Directness | 75.00% (45/60) | 25.00% (15/60) |
+| **Overall** | **92.50% (222/240)** | **7.50% (18/240)** |
 
-There were no ties or incomplete decisions. Overall percentages pool four criteria per question; they are not the percentage of questions answered correctly.
+Both systems returned answers for all 60 questions. The saved evaluation file contains 720 completed judgments and 13 error records, producing 240 majority decisions. Error records are excluded from voting. There were no ties or incomplete decisions. Overall percentages pool four criteria per question; they are not the percentage of questions answered correctly.
 
 | Recorded response time | Vector RAG | GraphRAG |
 |---|---:|---:|
-| Mean | 5.42 s | 656.38 s (10.94 min) |
-| Median | 5.05 s | 652.82 s (10.88 min) |
+| Mean | 6.97 s | 656.38 s (10.94 min) |
+| Median | 6.78 s | 652.82 s (10.88 min) |
 
-GraphRAG timing includes launching its CLI for each question. These are measurements from this run, not general performance guarantees.
+### Results by question category
 
-**Interpretation:** The judge favored GraphRAG for breadth and detail, and vector RAG for directness. The judge compares the answers without checking their grounding against Rousseau's source passages, so these results do not establish factual accuracy or freedom from hallucination.
+| Measure | Vector RAG | GraphRAG |
+| --- | --- | --- |
+| Local fact retrieval | 6.25% (5/80) | 93.75% (75/80) |
+| Cross-document reasoning | 5.00% (4/80) | 95.00% (76/80) |
+| Global sensemaking | 11.25% (9/80) | 88.75% (71/80) |
 
-See the [machine-readable summary](benchmark/analysis_results/summary.json), [criterion results](benchmark/analysis_results/metric_summary.csv), and [latency results](benchmark/analysis_results/latency_summary.csv).
+Each category contains 20 questions evaluated on four criteria, giving 80 majority decisions per category.
 
+**Interpretation:** GraphRAG was preferred on all four criteria but took approximately 94 times longer on average. Whether the extra response time is worthwhile depends on the application. Total API cost and indexing time were not measured, so financial cost-effectiveness cannot be assessed.
+
+GraphRAG timing includes command-line subprocess startup for each question; vector RAG timing covers a direct function call. These measurements describe this run, not general performance guarantees. Judge preferences do not establish factual accuracy, citation correctness, or faithfulness to Rousseau's writings. Differences in prompts, chunking, and context budgets also limit attribution of the results solely to retrieval architecture.
+
+See the [summary JSON](benchmark/analysis_results/summary.json), [criterion results](benchmark/analysis_results/metric_summary.csv), [category results](benchmark/analysis_results/category_summary.csv), and [latency results](benchmark/analysis_results/latency_summary.csv).
 
 ## Answer example
 
@@ -77,22 +129,10 @@ The following are opening excerpts from the saved answers, reproduced verbatim. 
 
 | Vector RAG | GraphRAG — global search |
 |---|---|
-| Rousseau's concept of the **General Will** refers to the collective will of the citizens that aims at the common good and is both universal in its object and commonly held by the community. | Jean-Jacques Rousseau's concept of the *general will* is a foundational and central idea in his political philosophy, representing the collective sovereignty of the people as a unified body aimed at the common good and public interest. |
-| **Recorded response time:** 16.867 s | **Recorded response time:** 705.086 s |
+| Rousseau's concept of the General Will is a foundational idea in his political philosophy, particularly as articulated in his work, *The Social Contract*. The General Will represents the collective will of the citizenry aimed at the common good, transcending individual interests. It is essential to understand that the General Will is not merely the sum of individual wills (which Rousseau refers to as the "Will of All"), but rather a unified expression of the collective interest that seeks the welfare of the community as a whole. | Jean-Jacques Rousseau's concept of the *general will* is a foundational and central idea in his political philosophy, representing the collective sovereignty of the people as a unified body aimed at the common good and public interest. |
+| **Recorded response time:** 9.757 s | **Recorded response time:** 705.086 s |
 
-The full vector answer continues with a numbered explanation. The full GraphRAG answer expands into sections on sovereignty, liberty, institutions, and private interests, with internal report references. Read both complete responses in the [vector answer file](benchmark/vector_answers.json) and [GraphRAG answer file](benchmark/graphrag_answers.json); search for `L01`.
-
-
-## Source Texts
-Both GraphRAG and VectorRAG used these documents listed below. These were verified to be free domain. No copyrighted material was used.
-
-Below list of sources used:
-
-| Title | Translator | Source |
-|---|---|---|
-| *A Discourse Upon the Origin and the Foundation of the Inequality Among Mankind* | Unknown | [Project Gutenberg](https://www.gutenberg.org/ebooks/11136) |
-| *The Social Contract & Discourses* | G. D. H. Cole (George Douglas Howard) | [Project Gutenberg](https://www.gutenberg.org/ebooks/46333) |
-| *Emile* | Barbara Foxley | [Online Library of Liberty](https://oll.libertyfund.org/titles/rousseau-emile-or-education) |
+The full vector answer continues with further explanation. The full GraphRAG answer expands into sections on sovereignty, liberty, institutions, and private interests, with internal report references. Read both complete responses in the [vector answer file](benchmark/vector_answers.json) and [GraphRAG answer file](benchmark/graphrag_answers.json); search for `L01`.
 
 ## Explore the artifacts
 
@@ -110,105 +150,6 @@ Below list of sources used:
 | [Latency summary](benchmark/analysis_results/latency_summary.csv) | Mean and median response times |
 | [Analysis script](benchmark/analysis.py) | Code that regenerates the summaries |
 
-
-**Text preparation:**
-All sources were used in a .txt format for these systems to embed. 
-Before use, anything that was not written by Rousseau himself was removed which includes ie Introductions, Headers, Footers etc.
-
-## Configuration
-
-Record the settings used for the reported benchmark, including settings that differ between indexing and answering.
-
-| Setting | VectorRAG | GraphRAG |
-| --- | --- | --- |
-| Framework and version | LangChain with langchain_openai, langchain_chroma, and langchain_text_splitters; Chroma vector database. | Microsoft GraphRAG v3.1.2 |
-| Embedding model | text-embedding-3-large | text-embedding-3-large |
-| Answer-generation model | gpt-4.1-mini with temperature=0 | gpt-4.1-mini |
-| Indexing / extraction model | Not applicable unless used | gpt-4.1-mini for graph extraction, description summarization, and community report generation |
-| Chunk size and unit | 500 characters, using RecursiveCharacterTextSplitter | 600 tokens, using the o200k_base encoding |
-| Chunk overlap and unit | Configured overlap of 100 characters | 100 tokens |
-| Retrieval settings | Chroma vector store at chroma_db, collection rousseau_collection. Uses similarity_search_with_score(k=5) to retrieve up to five passages. No score threshold or reranking is applied. | Global search, selected by QUERY_METHOD = "global" in benchmark/run_graphrag.py and passed to the CLI as --method global. Community level and query context limits are not explicitly set by the benchmark runner. |
-| Answer instructions | PROMPT_TEMPLATE in rag_chain.py: base answers on retrieved excerpts, address the question directly, explain concepts clearly, connect ideas when supported, distinguish evidence from interpretation, and avoid unsupported claims or invented quotations and citations. Answer partially when evidence is incomplete; explicitly state insufficient information when no answer is supported. | Search-specific prompt files in prompts/, listed below. Their instructions and evidence rules require inspecting those files. |
-
-See `settings.yaml` for further details.
-
-## Repository Contents
-
-| Path | Purpose |
-| --- | --- |
-| `RAG application/` | VectorRAG implementation, including ingestion and retrieval code. |
-| `benchmark/` | Benchmark questions, answer-generation scripts, evaluation scripts, and small results files. |
-| `prompts/` | Prompts used by the GraphRAG workflow. |
-| `settings.yaml` | GraphRAG configuration. |
-| `requirements.txt` | Python dependencies and versions needed to reproduce the project. |
-| `.gitignore` | Excludes credentials, environments, and generated artifacts. |
-
-Generated databases, caches, logs, and full indexing outputs are excluded. They can be recreated locally.
-
-## Evaluation Method
-
-**Question set**
-
-The benchmark contains 60 questions that are evenly divided into three categories:
-
-| Category | Questions | Purpose |
-| --- | --- | --- |
-| local_fact_retrieval | 20 | Retrieve specific definitions, concepts, or explanations from an individual work. |
-| cross_document_reasoning | 20 | Connect and compare ideas across multiple works. |
-| global_sensemaking | 20 | Synthesize broad themes and relationships across Rousseau’s writings. |
-
-
-## Results
-
-The benchmark evaluated 60 questions, with 20 questions in each of three categories. Each answer pair was evaluated by gpt-4.1-mini on four criteria, with three judgments per criterion. The 720 completed judgments were aggregated into 240 question–criterion majority decisions, with no ties or incomplete comparisons.
-
-
-| Measure | VectorRAG | GraphRAG |
-| --- | --- | --- |
-| Questions successfully answered / attempted | 60/60 | 60/60 |
-| Comprehensiveness win rate | 0% (0/60) | 100% (60/60) |
-| Diversity win rate | 0% (0/60) | 100% (60/60) |
-| Empowerment win rate | 16.67% (10/60) | 83.33% (50/60) |
-| Directness win rate | 75% (45/60) | 25% (15/60) |
-| Overall win rate across four criteria | 22.92% (55/240) | 77.08% (185/240) |
-| Mean response time, seconds | 5.419 | 656.376 |
-| Median response time, seconds | 5.054 | 652.816 |
-| Source-support / faithfulness score | Not measured | Not measured |
-| Indexing time, minutes | Not measured | Not measured |
-| Total API cost, USD | Not measured | Not measured |
-
-
-## Results by Question Category
-| Measure | VectorRAG | GraphRAG |
-| --- | --- | --- |
-| Local fact retrieval | 23.75% (19/80) | 76.25% (61/80) |
-| Cross-document reasoning | 21.25% (17/80) | 78.75% (63/80) |
-| Global sensemaking | 23.75% (19/80) | 76.25% (61/80) |
-
-**Interpretation**
-GraphRAG was preferred on comprehensiveness, diversity, and empowerment, while VectorRAG was preferred on directness. However, its mean response time was approximately 10.94 minutes, compared with 5.42 seconds for VectorRAG—approximately 121 times longer in this implementation.
-
-These results indicate a significant trade-off between the judge’s preference for broader answers and the speed and directness of VectorRAG. Whether the additional waiting time is worthwhile depends on the intended application. Financial cost-effectiveness could not be assessed because total API costs were not calculated.
-
-Response times reflect the implemented runners: GraphRAG timing includes command-line subprocess startup, while VectorRAG timing covers a direct function call. The judge was not supplied with source passages or verified reference answers, so preference rates do not establish factual accuracy, citation correctness, or faithfulness to Rousseau’s writings. Remaining differences in prompts, chunking, and context budgets also limit attribution of the results solely to retrieval architecture.
-
-Supporting results: summary.json.
-
-**Answer evaluation** 
-
-Answers were evaluated using pairwise LLM-as-a-judge comparisons with gpt-4.1-mini. For each question, the judge compared the VectorRAG and GraphRAG answers on four criteria:
-Suggested dimensions are relevance, coverage, and support from the source texts. 
-A judge's preference alone does not establish factual accuracy.
-
-| Criterion | Purpose |
-| --- | --- |
-| Comprehensiveness | How thoroughly the answer addresses the question. |
-| Diversity | How effectively the answer helps the reader understand the topic and make informed judgments. |
-| Empowerment | Synthesize broad themes and relationships across Rousseau’s writings. |
-| Directness | How directly and clearly the answer addresses the question. |
-
-The evaluation recorded a preferred answer and a written explanation rather than a numerical quality score. Each question received three judge comparisons per criterion, producing 720 completed comparisons: 60 questions × 4 criteria × 3 runs.
-
 ## Analyze saved results
 
 You can inspect every artifact above without API credentials. To regenerate the CSV and JSON summaries, use Python 3.12 and run this command from the repository root, the directory containing `benchmark/`:
@@ -219,52 +160,50 @@ python benchmark/analysis.py
 
 The script reads the saved questions, answers, and evaluations and writes to `benchmark/analysis_results/`. It makes no API calls and requires only the Python standard library for CSV/JSON output. If `matplotlib` is installed, it also generates a chart; otherwise it skips that chart.
 
+## Repository contents
 
+| Path | Purpose |
+| --- | --- |
+| [RAG application/](RAG%20application/) | Vector RAG implementation, including ingestion and retrieval code. |
+| [benchmark/](benchmark/) | Benchmark questions, answer-generation scripts, evaluation scripts, and small results files. |
+| [prompts/](prompts/) | Prompts used by the GraphRAG workflow. |
+| [settings.yaml](settings.yaml) | GraphRAG configuration. |
+| [requirements.txt](requirements.txt) | Python dependencies and versions needed to reproduce the project. |
+| [.gitignore](.gitignore) | Excludes credentials, environments, and generated artifacts. |
+
+Generated databases, caches, logs, and full indexing outputs are excluded. They can be recreated locally.
 
 ## Limitations
 
 - Findings from this Rousseau corpus may not generalize to other authors or domains.
 - Translation choices and text preparation can affect retrieval and interpretation.
 - Extracted graph relationships and generated summaries can contain errors.
-- Question set may favor particular question types.
+- The question set may favor particular question types.
 - LLM-based evaluation can favor longer or more polished answers and may miss unsupported claims.
 - Different corpora, answer models, or context budgets limit conclusions about retrieval alone.
 - Response times vary with API conditions, caching, and models.
 
-## Future Work
-A list of suggestions to improve upon this project: 
+## Future work
 
-- Expand the benchmark with more questions and source material such as academic papers on Rousseau's overall philosophy.
-- Add human review of a sample of answers and citations.
-- Compare additional GraphRAG search methods such as HypridRAG.
-- Analyze API cost.
-- Use up-to-date OpenAI models.
-- Adhere to a strict Human-in-the-loop workflow of the works by citation review.
-- Comparable context budgets, or an explicit experiment measuring their effect.
-- Investigate and measure the LLM-as-a-judge verbosity bias to ensure benchmark integrity.
-- Repeated timing measurements and separate indexing/query costs.
-- An explanation of how benchmark questions were authored and validated.
+- Expand the benchmark with more questions and relevant academic literature.
+- Add human review of answers and citations against source passages.
+- Compare other GraphRAG search methods and hybrid retrieval approaches, such as HybridRAG.
+- Measure API costs and report indexing and query costs separately.
+- Evaluate newer answer-generation models under controlled conditions.
+- Match context budgets or measure their effect explicitly.
+- Investigate whether the LLM judge favors longer answers.
+- Repeat timing measurements to assess variability.
+- Document how benchmark questions were authored and validated.
 
-## Source texts
+## References and attribution
 
-See [Source attribution](SOURCES.md) for the Rousseau texts,
-translators, and original download links
+This project uses Microsoft's GraphRAG framework. The framework and underlying research belong to their respective authors; this repository documents their application and evaluation.
 
-## References and Attribution
+- [GraphRAG research paper](https://arxiv.org/abs/2404.16130)
+- [Microsoft GraphRAG repository](https://github.com/microsoft/graphrag)
+- [Retrieval-Augmented Generation research paper](https://arxiv.org/abs/2005.11401)
 
-This project uses Microsoft's GraphRAG framework. The framework and underlying research belong to their respective authors; this repository documents my application and evaluation of the approach.
-
-
-**Research Paper**
-https://arxiv.org/abs/2404.16130
-
-**Github Repository**
-https://github.com/microsoft/graphrag
-
-For VectorRAG framework, check the link below:
-
-**Research Paper**
-https://arxiv.org/abs/2005.11401
+To cite this project, use [CITATION.cff](CITATION.cff).
 
 ## License
 
@@ -279,6 +218,4 @@ for their sources and applicable notices.
 
 Killian K. Williams
 
-**Portfolio Link**
-This is
-https://killianportfolio6.wordpress.com/graphrag-write-up/
+[Project write-up and portfolio](https://killianportfolio6.wordpress.com/graphrag-write-up/)

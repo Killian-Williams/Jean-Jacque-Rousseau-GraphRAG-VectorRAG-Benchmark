@@ -1,32 +1,21 @@
 {
-  "release_tag": "v1.0.0",
-  "release_date": "2026-11-21",
-  "benchmark_name": "Rousseau_RAG_vs_GraphRAG_Benchmark",
-  "snapshot_id": "saved-results-sha256-cf0c30966e0ee847511157c1425e6b0c64d731e4911451eab8f87120f80829a6",
-  "original_execution_run_id": null,
-  "hash_scope": "UTF-8 text after universal newline normalization (CRLF/CR to LF); no other transformations",
-  "snapshot_hash_scope": "SHA-256 of artifact_sha256 mapping serialized as sorted-key compact JSON, UTF-8",
+  "release_tag": "controlled-run-2026-11-22",
+  "release_tag_note": "Snapshot identifier; no Git tag or GitHub release is claimed for this update. Historical v1.0.0 remains unchanged.",
+  "snapshot_id": "sha256:81232f3e426fad40a95f28d4f3b90b4f76e47d6f51b99fa65430311d8768a8de",
   "artifact_sha256": {
-    "benchmark/questions.json": "4bb39fa122dfa32c460adb8e6685c7393b65f6a8a8757117f3914c8cfb0ea29d",
-    "benchmark/vector_answers.json": "d497d60b3a7b939eab0c918bac6976d293fd5862ca2ea36c4662d25fbba1e356",
-    "benchmark/graphrag_answers.json": "f68c09a91848dbbf71eb3b59ea6891b2a40ec17c39028dc4a76f4d6c2a0178fc",
-    "benchmark/evaluations.json": "a6d3651a405537a057fca497e8c4d163833f19aac1064a90d1af0eff4bf42773",
+    "benchmark/analysis_results/category_metric_summary.csv": "562cbc792a8d13790e02d8a000c582709c5b9ae401a822283a80475c976d39ff",
+    "benchmark/analysis_results/category_summary.csv": "995a2058a34dcd5d6ed1e8441d5f0dd47c7bf374bce3b7e44c1bfce275e77235",
+    "benchmark/analysis_results/latency_summary.csv": "2a1dce6049a4801bc1640097521d4eedad60ec6c157e8489c89fd6f37d8fd470",
+    "benchmark/analysis_results/metric_summary.csv": "b66453f7a32cb38372eb1f2a315c9ea9d2628f27427aea5662408fd67ec96fe8",
+    "benchmark/analysis_results/question_results.csv": "44e4412191747010ab0e0784f7ebbb7441d6d522750b116d9f9d5ae26f69e16f",
+    "benchmark/analysis_results/summary.json": "4742195317a6400e3195d251de4e43d3b18423f1bb752215dd38390430eadf20",
+    "benchmark/questions.json": "04a6874600ef73c25d5e39ea6192370f0de0b44b05f2a433524e86cb7553a0cb",
+    "benchmark/vector_answers.json": "835538a8b4a697b23ab7eb17dea77e0ef3365b85feae2bb311983528ac8e6602",
+    "benchmark/graphrag_answers.json": "a9a061583f79c43e3f602d7283f133022ba09acaa824691c1bcd432fabdcf69e",
+    "benchmark/evaluations.json": "784c04a1a87a038bbddc1fd2267d7e2923d43e0ba6a0626355cbd7e5d142ec9d",
     "benchmark/analysis.py": "c99f0234724bbbf11375c1055bcc30b0ca7cef249d78184e929ae57a0a7ed5cd",
-    "settings.yaml": "aa72de9f4f579350c0d84329c0fc3f4e713ec76dcec5e7edeebf0368a8df75af",
-    "corpus-manifest.json": "6ed12ac37ad70d30428cb95d2e2d3adf3f16e4c5176915094413430af31b1017",
-    "benchmark/analysis_results/category_metric_summary.csv": "40f89e0306e6a51edffc379c1fc7df6fa9bac15d9ce9f9c8060ce6d2a11d54c0",
-    "benchmark/analysis_results/category_summary.csv": "6a321148042e6fb369dee9bc7763281ee6f5d1ac32a5f110793b73227a798b3e",
-    "benchmark/analysis_results/latency_summary.csv": "6c8700e57973ab57be82e80021a1cd7d683b25078937750b797c1840ba9de8e0",
-    "benchmark/analysis_results/metric_summary.csv": "2f1a12d0f4864d2305559733e4c737589c74ee43d1d4e8ca936d9e0a6d21a65d",
-    "benchmark/analysis_results/question_results.csv": "9b24e1831ec1c668edd68a3e57574b9fc1d0d7ee52f51507a06aa15bee267724",
-    "benchmark/analysis_results/summary.json": "381794dfbee9fb76b6b1f498f0e8e41718ddf349ca3364c9b513dbe40de4b912"
+    "benchmark/provenance/2026-11-22/run.json": "06b92944532f659b11381721c6ae730cfb469582046c455653f2414d2abba94c"
   },
-  "overall_graphrag_wins": 222,
-  "overall_vector_rag_wins": 18,
-  "evaluated_pairs": 240,
-  "provenance_status": "Original index-to-answer linkage and corpus equivalence remain unverified; see CORPUS_PROVENANCE.md.",
-  "archived_paths": {
-    "settings.yaml": "benchmark/release-config/v1.0.0/settings.yaml"
-  },
-  "archive_note": "Historical configuration is archived so current setup can evolve without changing the v1.0.0 artifact fingerprint."
+  "original_execution_run_id": "rousseau-20261122-budget20-adaptive",
+  "hash_scope": "UTF-8 text with universal newline normalization"
 }

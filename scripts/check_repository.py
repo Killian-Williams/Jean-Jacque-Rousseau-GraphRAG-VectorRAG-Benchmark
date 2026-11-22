@@ -152,6 +152,11 @@ def main():
     for check in (check_prompts, check_benchmark, check_summaries, check_release):
         check(args.root)
         print(f"PASS: {check.__name__}")
+    archive = args.root / "archives" / "v1.0.0"
+    if archive.exists():
+        for check in (check_benchmark, check_summaries, check_release):
+            check(archive)
+            print(f"PASS archived v1.0.0: {check.__name__}")
 
 
 if __name__ == "__main__":

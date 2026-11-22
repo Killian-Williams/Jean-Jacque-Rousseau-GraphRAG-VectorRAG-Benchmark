@@ -1,0 +1,7 @@
+{
+  "entities": 3105,
+  "relationships": 5776,
+  "dangling_final_relationships": 0,
+  "dropped_during_extraction": 160,
+  "scope": "Referential integrity only; no semantic or source-grounding claim."
+}

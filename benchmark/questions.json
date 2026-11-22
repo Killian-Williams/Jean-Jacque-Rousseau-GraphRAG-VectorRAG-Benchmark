@@ -1,7 +1,7 @@
 {
-  "benchmark_name": "Rousseau_RAG_vs_GraphRAG_Benchmark",
+  "benchmark_name": "Rousseau_Controlled_Budget_Benchmark_20261122",
   "version": "1.0",
-  "description": "A domain-specific benchmark for comparing conventional vector RAG and GraphRAG over a multi-document corpus of Jean-Jacques Rousseau's writings.",
+  "description": "Complete controlled rerun of the same 60 questions, using identical prepared inputs for both systems; all questions completed within the authorized budget.",
   "design": {
     "total_questions": 60,
     "categories": {
@@ -23,149 +23,6 @@
   },
   "questions": [
     {
-      "id": "L01",
-      "category": "local_fact_retrieval",
-      "difficulty": "basic_to_intermediate",
-      "question": "What does Rousseau mean by the general will?",
-      "expected_scope": "single_document",
-      "target_documents": [
-        "The Social Contract"
-      ],
-      "requires_cross_document_reasoning": false,
-      "requires_global_sensemaking": false,
-      "requires_citations": true
-    },
-    {
-      "id": "L02",
-      "category": "local_fact_retrieval",
-      "difficulty": "basic_to_intermediate",
-      "question": "How does Rousseau distinguish the general will from the will of all?",
-      "expected_scope": "single_document",
-      "target_documents": [
-        "The Social Contract"
-      ],
-      "requires_cross_document_reasoning": false,
-      "requires_global_sensemaking": false,
-      "requires_citations": true
-    },
-    {
-      "id": "L03",
-      "category": "local_fact_retrieval",
-      "difficulty": "basic_to_intermediate",
-      "question": "What does Rousseau mean when he says that sovereignty is inalienable?",
-      "expected_scope": "single_document",
-      "target_documents": [
-        "The Social Contract"
-      ],
-      "requires_cross_document_reasoning": false,
-      "requires_global_sensemaking": false,
-      "requires_citations": true
-    },
-    {
-      "id": "L04",
-      "category": "local_fact_retrieval",
-      "difficulty": "basic_to_intermediate",
-      "question": "Why does Rousseau argue that sovereignty cannot be represented?",
-      "expected_scope": "single_document",
-      "target_documents": [
-        "The Social Contract"
-      ],
-      "requires_cross_document_reasoning": false,
-      "requires_global_sensemaking": false,
-      "requires_citations": true
-    },
-    {
-      "id": "L05",
-      "category": "local_fact_retrieval",
-      "difficulty": "basic_to_intermediate",
-      "question": "How does Rousseau distinguish the sovereign from the government?",
-      "expected_scope": "single_document",
-      "target_documents": [
-        "The Social Contract"
-      ],
-      "requires_cross_document_reasoning": false,
-      "requires_global_sensemaking": false,
-      "requires_citations": true
-    },
-    {
-      "id": "L06",
-      "category": "local_fact_retrieval",
-      "difficulty": "basic_to_intermediate",
-      "question": "What is the social pact according to Rousseau?",
-      "expected_scope": "single_document",
-      "target_documents": [
-        "The Social Contract"
-      ],
-      "requires_cross_document_reasoning": false,
-      "requires_global_sensemaking": false,
-      "requires_citations": true
-    },
-    {
-      "id": "L07",
-      "category": "local_fact_retrieval",
-      "difficulty": "basic_to_intermediate",
-      "question": "What does Rousseau mean by civil freedom?",
-      "expected_scope": "single_document",
-      "target_documents": [
-        "The Social Contract"
-      ],
-      "requires_cross_document_reasoning": false,
-      "requires_global_sensemaking": false,
-      "requires_citations": true
-    },
-    {
-      "id": "L08",
-      "category": "local_fact_retrieval",
-      "difficulty": "basic_to_intermediate",
-      "question": "How does Rousseau describe moral freedom?",
-      "expected_scope": "single_document",
-      "target_documents": [
-        "The Social Contract"
-      ],
-      "requires_cross_document_reasoning": false,
-      "requires_global_sensemaking": false,
-      "requires_citations": true
-    },
-    {
-      "id": "L09",
-      "category": "local_fact_retrieval",
-      "difficulty": "basic_to_intermediate",
-      "question": "What role does law play in Rousseau's political theory?",
-      "expected_scope": "single_document",
-      "target_documents": [
-        "The Social Contract"
-      ],
-      "requires_cross_document_reasoning": false,
-      "requires_global_sensemaking": false,
-      "requires_citations": true
-    },
-    {
-      "id": "L10",
-      "category": "local_fact_retrieval",
-      "difficulty": "basic_to_intermediate",
-      "question": "What characteristics does Rousseau assign to the legislator?",
-      "expected_scope": "single_document",
-      "target_documents": [
-        "The Social Contract"
-      ],
-      "requires_cross_document_reasoning": false,
-      "requires_global_sensemaking": false,
-      "requires_citations": true
-    },
-    {
-      "id": "L11",
-      "category": "local_fact_retrieval",
-      "difficulty": "basic_to_intermediate",
-      "question": "What is natural pity in Rousseau's account of human nature?",
-      "expected_scope": "single_document",
-      "target_documents": [
-        "Discourse on the Origin and Basis of Inequality Among Men"
-      ],
-      "requires_cross_document_reasoning": false,
-      "requires_global_sensemaking": false,
-      "requires_citations": true
-    },
-    {
       "id": "L12",
       "category": "local_fact_retrieval",
       "difficulty": "basic_to_intermediate",
@@ -179,104 +36,40 @@
       "requires_citations": true
     },
     {
-      "id": "L13",
-      "category": "local_fact_retrieval",
-      "difficulty": "basic_to_intermediate",
-      "question": "What is amour de soi in Rousseau's account of human motivation?",
-      "expected_scope": "single_document",
+      "id": "C02",
+      "category": "cross_document_reasoning",
+      "difficulty": "intermediate_to_advanced",
+      "question": "How does Rousseau's description of inequality help explain the political problems addressed in The Social Contract?",
+      "expected_scope": "multiple_documents",
       "target_documents": [
-        "Discourse on the Origin and Basis of Inequality Among Men"
+        "Discourse on the Origin and Basis of Inequality Among Men",
+        "The Social Contract"
       ],
-      "requires_cross_document_reasoning": false,
+      "requires_cross_document_reasoning": true,
       "requires_global_sensemaking": false,
       "requires_citations": true
     },
     {
-      "id": "L14",
-      "category": "local_fact_retrieval",
-      "difficulty": "basic_to_intermediate",
-      "question": "What is amour-propre and how does Rousseau describe its emergence?",
-      "expected_scope": "single_document",
+      "id": "G15",
+      "category": "global_sensemaking",
+      "difficulty": "advanced",
+      "question": "What recurring tensions exist between independence and social cooperation in Rousseau's thought?",
+      "expected_scope": "whole_corpus",
       "target_documents": [
-        "Discourse on the Origin and Basis of Inequality Among Men"
+        "ALL"
       ],
-      "requires_cross_document_reasoning": false,
-      "requires_global_sensemaking": false,
+      "requires_cross_document_reasoning": true,
+      "requires_global_sensemaking": true,
       "requires_citations": true
     },
     {
-      "id": "L15",
+      "id": "L04",
       "category": "local_fact_retrieval",
       "difficulty": "basic_to_intermediate",
-      "question": "What role does property play in Rousseau's account of the development of inequality?",
+      "question": "Why does Rousseau argue that sovereignty cannot be represented?",
       "expected_scope": "single_document",
       "target_documents": [
-        "Discourse on the Origin and Basis of Inequality Among Men"
-      ],
-      "requires_cross_document_reasoning": false,
-      "requires_global_sensemaking": false,
-      "requires_citations": true
-    },
-    {
-      "id": "L16",
-      "category": "local_fact_retrieval",
-      "difficulty": "basic_to_intermediate",
-      "question": "Why does Rousseau criticize the progress of the arts and sciences?",
-      "expected_scope": "single_document",
-      "target_documents": [
-        "Discourse on the Sciences and Arts"
-      ],
-      "requires_cross_document_reasoning": false,
-      "requires_global_sensemaking": false,
-      "requires_citations": true
-    },
-    {
-      "id": "L17",
-      "category": "local_fact_retrieval",
-      "difficulty": "basic_to_intermediate",
-      "question": "How does Rousseau connect luxury with moral corruption?",
-      "expected_scope": "single_document",
-      "target_documents": [
-        "Discourse on the Sciences and Arts"
-      ],
-      "requires_cross_document_reasoning": false,
-      "requires_global_sensemaking": false,
-      "requires_citations": true
-    },
-    {
-      "id": "L18",
-      "category": "local_fact_retrieval",
-      "difficulty": "basic_to_intermediate",
-      "question": "What does Rousseau say about natural education in Emile?",
-      "expected_scope": "single_document",
-      "target_documents": [
-        "Emile"
-      ],
-      "requires_cross_document_reasoning": false,
-      "requires_global_sensemaking": false,
-      "requires_citations": true
-    },
-    {
-      "id": "L19",
-      "category": "local_fact_retrieval",
-      "difficulty": "basic_to_intermediate",
-      "question": "What role does experience play in Rousseau's theory of education?",
-      "expected_scope": "single_document",
-      "target_documents": [
-        "Emile"
-      ],
-      "requires_cross_document_reasoning": false,
-      "requires_global_sensemaking": false,
-      "requires_citations": true
-    },
-    {
-      "id": "L20",
-      "category": "local_fact_retrieval",
-      "difficulty": "basic_to_intermediate",
-      "question": "How does Rousseau describe the relationship between dependence and freedom in education?",
-      "expected_scope": "single_document",
-      "target_documents": [
-        "Emile"
+        "The Social Contract"
       ],
       "requires_cross_document_reasoning": false,
       "requires_global_sensemaking": false,
@@ -297,87 +90,28 @@
       "requires_citations": true
     },
     {
-      "id": "C02",
-      "category": "cross_document_reasoning",
-      "difficulty": "intermediate_to_advanced",
-      "question": "How does Rousseau's description of inequality help explain the political problems addressed in The Social Contract?",
-      "expected_scope": "multiple_documents",
+      "id": "G11",
+      "category": "global_sensemaking",
+      "difficulty": "advanced",
+      "question": "How does Rousseau connect morality with freedom across his philosophical works?",
+      "expected_scope": "whole_corpus",
       "target_documents": [
-        "Discourse on the Origin and Basis of Inequality Among Men",
-        "The Social Contract"
+        "ALL"
       ],
       "requires_cross_document_reasoning": true,
-      "requires_global_sensemaking": false,
+      "requires_global_sensemaking": true,
       "requires_citations": true
     },
     {
-      "id": "C03",
-      "category": "cross_document_reasoning",
-      "difficulty": "intermediate_to_advanced",
-      "question": "How does Rousseau's account of amour-propre relate to his concerns about political dependence in The Social Contract?",
-      "expected_scope": "multiple_documents",
+      "id": "L10",
+      "category": "local_fact_retrieval",
+      "difficulty": "basic_to_intermediate",
+      "question": "What characteristics does Rousseau assign to the legislator?",
+      "expected_scope": "single_document",
       "target_documents": [
-        "Discourse on the Origin and Basis of Inequality Among Men",
         "The Social Contract"
       ],
-      "requires_cross_document_reasoning": true,
-      "requires_global_sensemaking": false,
-      "requires_citations": true
-    },
-    {
-      "id": "C04",
-      "category": "cross_document_reasoning",
-      "difficulty": "intermediate_to_advanced",
-      "question": "How does Rousseau's criticism of civilization in the Discourse on the Sciences and Arts compare with his political project in The Social Contract?",
-      "expected_scope": "multiple_documents",
-      "target_documents": [
-        "Discourse on the Sciences and Arts",
-        "The Social Contract"
-      ],
-      "requires_cross_document_reasoning": true,
-      "requires_global_sensemaking": false,
-      "requires_citations": true
-    },
-    {
-      "id": "C05",
-      "category": "cross_document_reasoning",
-      "difficulty": "intermediate_to_advanced",
-      "question": "How does Rousseau's treatment of education in Emile complement his account of citizenship in The Social Contract?",
-      "expected_scope": "multiple_documents",
-      "target_documents": [
-        "Emile",
-        "The Social Contract"
-      ],
-      "requires_cross_document_reasoning": true,
-      "requires_global_sensemaking": false,
-      "requires_citations": true
-    },
-    {
-      "id": "C06",
-      "category": "cross_document_reasoning",
-      "difficulty": "intermediate_to_advanced",
-      "question": "What relationship can be traced between Rousseau's concept of natural pity and his later ideas about moral or civic life?",
-      "expected_scope": "multiple_documents",
-      "target_documents": [
-        "Discourse on the Origin and Basis of Inequality Among Men",
-        "The Social Contract",
-        "Emile"
-      ],
-      "requires_cross_document_reasoning": true,
-      "requires_global_sensemaking": false,
-      "requires_citations": true
-    },
-    {
-      "id": "C07",
-      "category": "cross_document_reasoning",
-      "difficulty": "intermediate_to_advanced",
-      "question": "How does the development of property in the Discourse on Inequality connect to Rousseau's theory of legitimate political authority in The Social Contract?",
-      "expected_scope": "multiple_documents",
-      "target_documents": [
-        "Discourse on the Origin and Basis of Inequality Among Men",
-        "The Social Contract"
-      ],
-      "requires_cross_document_reasoning": true,
+      "requires_cross_document_reasoning": false,
       "requires_global_sensemaking": false,
       "requires_citations": true
     },
@@ -397,144 +131,68 @@
       "requires_citations": true
     },
     {
-      "id": "C09",
+      "id": "G01",
+      "category": "global_sensemaking",
+      "difficulty": "advanced",
+      "question": "What are the major recurring themes across Rousseau's writings, and how are they connected?",
+      "expected_scope": "whole_corpus",
+      "target_documents": [
+        "ALL"
+      ],
+      "requires_cross_document_reasoning": true,
+      "requires_global_sensemaking": true,
+      "requires_citations": true
+    },
+    {
+      "id": "L05",
+      "category": "local_fact_retrieval",
+      "difficulty": "basic_to_intermediate",
+      "question": "How does Rousseau distinguish the sovereign from the government?",
+      "expected_scope": "single_document",
+      "target_documents": [
+        "The Social Contract"
+      ],
+      "requires_cross_document_reasoning": false,
+      "requires_global_sensemaking": false,
+      "requires_citations": true
+    },
+    {
+      "id": "C03",
       "category": "cross_document_reasoning",
       "difficulty": "intermediate_to_advanced",
-      "question": "How does Rousseau's critique of luxury and refinement relate to his broader concern with inequality?",
+      "question": "How does Rousseau's account of amour-propre relate to his concerns about political dependence in The Social Contract?",
       "expected_scope": "multiple_documents",
       "target_documents": [
-        "Discourse on the Sciences and Arts",
+        "Discourse on the Origin and Basis of Inequality Among Men",
+        "The Social Contract"
+      ],
+      "requires_cross_document_reasoning": true,
+      "requires_global_sensemaking": false,
+      "requires_citations": true
+    },
+    {
+      "id": "G17",
+      "category": "global_sensemaking",
+      "difficulty": "advanced",
+      "question": "How does Rousseau explain the transformation from natural human beings into social and political persons?",
+      "expected_scope": "whole_corpus",
+      "target_documents": [
+        "ALL"
+      ],
+      "requires_cross_document_reasoning": true,
+      "requires_global_sensemaking": true,
+      "requires_citations": true
+    },
+    {
+      "id": "L14",
+      "category": "local_fact_retrieval",
+      "difficulty": "basic_to_intermediate",
+      "question": "What is amour-propre and how does Rousseau describe its emergence?",
+      "expected_scope": "single_document",
+      "target_documents": [
         "Discourse on the Origin and Basis of Inequality Among Men"
       ],
-      "requires_cross_document_reasoning": true,
-      "requires_global_sensemaking": false,
-      "requires_citations": true
-    },
-    {
-      "id": "C10",
-      "category": "cross_document_reasoning",
-      "difficulty": "intermediate_to_advanced",
-      "question": "How does Rousseau's concept of freedom differ when discussing the natural human, the citizen, and the child?",
-      "expected_scope": "multiple_documents",
-      "target_documents": [
-        "Discourse on the Origin and Basis of Inequality Among Men",
-        "The Social Contract",
-        "Emile"
-      ],
-      "requires_cross_document_reasoning": true,
-      "requires_global_sensemaking": false,
-      "requires_citations": true
-    },
-    {
-      "id": "C11",
-      "category": "cross_document_reasoning",
-      "difficulty": "intermediate_to_advanced",
-      "question": "How does Rousseau connect social comparison with political inequality across his writings?",
-      "expected_scope": "multiple_documents",
-      "target_documents": [
-        "Discourse on the Origin and Basis of Inequality Among Men",
-        "The Social Contract"
-      ],
-      "requires_cross_document_reasoning": true,
-      "requires_global_sensemaking": false,
-      "requires_citations": true
-    },
-    {
-      "id": "C12",
-      "category": "cross_document_reasoning",
-      "difficulty": "intermediate_to_advanced",
-      "question": "How does Rousseau's view of human perfectibility contribute to both social progress and social corruption?",
-      "expected_scope": "multiple_documents",
-      "target_documents": [
-        "Discourse on the Origin and Basis of Inequality Among Men",
-        "Discourse on the Sciences and Arts"
-      ],
-      "requires_cross_document_reasoning": true,
-      "requires_global_sensemaking": false,
-      "requires_citations": true
-    },
-    {
-      "id": "C13",
-      "category": "cross_document_reasoning",
-      "difficulty": "intermediate_to_advanced",
-      "question": "How does Rousseau's idea of virtue differ between his critique of civilization and his theory of citizenship?",
-      "expected_scope": "multiple_documents",
-      "target_documents": [
-        "Discourse on the Sciences and Arts",
-        "The Social Contract"
-      ],
-      "requires_cross_document_reasoning": true,
-      "requires_global_sensemaking": false,
-      "requires_citations": true
-    },
-    {
-      "id": "C14",
-      "category": "cross_document_reasoning",
-      "difficulty": "intermediate_to_advanced",
-      "question": "How does Rousseau's educational theory attempt to protect the individual from the corrupting influences he describes elsewhere?",
-      "expected_scope": "multiple_documents",
-      "target_documents": [
-        "Emile",
-        "Discourse on the Sciences and Arts",
-        "Discourse on the Origin and Basis of Inequality Among Men"
-      ],
-      "requires_cross_document_reasoning": true,
-      "requires_global_sensemaking": false,
-      "requires_citations": true
-    },
-    {
-      "id": "C15",
-      "category": "cross_document_reasoning",
-      "difficulty": "intermediate_to_advanced",
-      "question": "How does Rousseau treat authority differently in education and politics?",
-      "expected_scope": "multiple_documents",
-      "target_documents": [
-        "Emile",
-        "The Social Contract"
-      ],
-      "requires_cross_document_reasoning": true,
-      "requires_global_sensemaking": false,
-      "requires_citations": true
-    },
-    {
-      "id": "C16",
-      "category": "cross_document_reasoning",
-      "difficulty": "intermediate_to_advanced",
-      "question": "How does Rousseau's account of natural independence relate to his concern with social domination?",
-      "expected_scope": "multiple_documents",
-      "target_documents": [
-        "Discourse on the Origin and Basis of Inequality Among Men",
-        "The Social Contract"
-      ],
-      "requires_cross_document_reasoning": true,
-      "requires_global_sensemaking": false,
-      "requires_citations": true
-    },
-    {
-      "id": "C17",
-      "category": "cross_document_reasoning",
-      "difficulty": "intermediate_to_advanced",
-      "question": "How do Rousseau's ideas about law and education both attempt to shape human behavior without relying solely on force?",
-      "expected_scope": "multiple_documents",
-      "target_documents": [
-        "The Social Contract",
-        "Emile"
-      ],
-      "requires_cross_document_reasoning": true,
-      "requires_global_sensemaking": false,
-      "requires_citations": true
-    },
-    {
-      "id": "C18",
-      "category": "cross_document_reasoning",
-      "difficulty": "intermediate_to_advanced",
-      "question": "How does Rousseau's understanding of self-love change across his account of natural man, social man, and moral education?",
-      "expected_scope": "multiple_documents",
-      "target_documents": [
-        "Discourse on the Origin and Basis of Inequality Among Men",
-        "Emile"
-      ],
-      "requires_cross_document_reasoning": true,
+      "requires_cross_document_reasoning": false,
       "requires_global_sensemaking": false,
       "requires_citations": true
     },
@@ -549,6 +207,32 @@
         "Emile"
       ],
       "requires_cross_document_reasoning": true,
+      "requires_global_sensemaking": false,
+      "requires_citations": true
+    },
+    {
+      "id": "G04",
+      "category": "global_sensemaking",
+      "difficulty": "advanced",
+      "question": "What recurring relationship does Rousseau identify between society and corruption?",
+      "expected_scope": "whole_corpus",
+      "target_documents": [
+        "ALL"
+      ],
+      "requires_cross_document_reasoning": true,
+      "requires_global_sensemaking": true,
+      "requires_citations": true
+    },
+    {
+      "id": "L06",
+      "category": "local_fact_retrieval",
+      "difficulty": "basic_to_intermediate",
+      "question": "What is the social pact according to Rousseau?",
+      "expected_scope": "single_document",
+      "target_documents": [
+        "The Social Contract"
+      ],
+      "requires_cross_document_reasoning": false,
       "requires_global_sensemaking": false,
       "requires_citations": true
     },
@@ -568,149 +252,6 @@
       "requires_citations": true
     },
     {
-      "id": "G01",
-      "category": "global_sensemaking",
-      "difficulty": "advanced",
-      "question": "What are the major recurring themes across Rousseau's writings, and how are they connected?",
-      "expected_scope": "whole_corpus",
-      "target_documents": [
-        "ALL"
-      ],
-      "requires_cross_document_reasoning": true,
-      "requires_global_sensemaking": true,
-      "requires_citations": true
-    },
-    {
-      "id": "G02",
-      "category": "global_sensemaking",
-      "difficulty": "advanced",
-      "question": "How does Rousseau's conception of freedom develop across his major works?",
-      "expected_scope": "whole_corpus",
-      "target_documents": [
-        "ALL"
-      ],
-      "requires_cross_document_reasoning": true,
-      "requires_global_sensemaking": true,
-      "requires_citations": true
-    },
-    {
-      "id": "G03",
-      "category": "global_sensemaking",
-      "difficulty": "advanced",
-      "question": "How does Rousseau explain the origins, development, and consequences of human inequality across his writings?",
-      "expected_scope": "whole_corpus",
-      "target_documents": [
-        "ALL"
-      ],
-      "requires_cross_document_reasoning": true,
-      "requires_global_sensemaking": true,
-      "requires_citations": true
-    },
-    {
-      "id": "G04",
-      "category": "global_sensemaking",
-      "difficulty": "advanced",
-      "question": "What recurring relationship does Rousseau identify between society and corruption?",
-      "expected_scope": "whole_corpus",
-      "target_documents": [
-        "ALL"
-      ],
-      "requires_cross_document_reasoning": true,
-      "requires_global_sensemaking": true,
-      "requires_citations": true
-    },
-    {
-      "id": "G05",
-      "category": "global_sensemaking",
-      "difficulty": "advanced",
-      "question": "How are freedom, dependence, inequality, and political authority connected across Rousseau's works?",
-      "expected_scope": "whole_corpus",
-      "target_documents": [
-        "ALL"
-      ],
-      "requires_cross_document_reasoning": true,
-      "requires_global_sensemaking": true,
-      "requires_citations": true
-    },
-    {
-      "id": "G06",
-      "category": "global_sensemaking",
-      "difficulty": "advanced",
-      "question": "What different forms of human dependence appear across Rousseau's writings, and why do they matter?",
-      "expected_scope": "whole_corpus",
-      "target_documents": [
-        "ALL"
-      ],
-      "requires_cross_document_reasoning": true,
-      "requires_global_sensemaking": true,
-      "requires_citations": true
-    },
-    {
-      "id": "G07",
-      "category": "global_sensemaking",
-      "difficulty": "advanced",
-      "question": "How does Rousseau's understanding of human nature support his political and educational theories?",
-      "expected_scope": "whole_corpus",
-      "target_documents": [
-        "ALL"
-      ],
-      "requires_cross_document_reasoning": true,
-      "requires_global_sensemaking": true,
-      "requires_citations": true
-    },
-    {
-      "id": "G08",
-      "category": "global_sensemaking",
-      "difficulty": "advanced",
-      "question": "What role does social comparison play across Rousseau's philosophy?",
-      "expected_scope": "whole_corpus",
-      "target_documents": [
-        "ALL"
-      ],
-      "requires_cross_document_reasoning": true,
-      "requires_global_sensemaking": true,
-      "requires_citations": true
-    },
-    {
-      "id": "G09",
-      "category": "global_sensemaking",
-      "difficulty": "advanced",
-      "question": "How does Rousseau distinguish natural conditions from artificial or socially created conditions across his works?",
-      "expected_scope": "whole_corpus",
-      "target_documents": [
-        "ALL"
-      ],
-      "requires_cross_document_reasoning": true,
-      "requires_global_sensemaking": true,
-      "requires_citations": true
-    },
-    {
-      "id": "G10",
-      "category": "global_sensemaking",
-      "difficulty": "advanced",
-      "question": "What problems of civilization recur across Rousseau's major writings, and what responses does he propose?",
-      "expected_scope": "whole_corpus",
-      "target_documents": [
-        "ALL"
-      ],
-      "requires_cross_document_reasoning": true,
-      "requires_global_sensemaking": true,
-      "requires_citations": true
-    },
-    {
-      "id": "G11",
-      "category": "global_sensemaking",
-      "difficulty": "advanced",
-      "question": "How does Rousseau connect morality with freedom across his philosophical works?",
-      "expected_scope": "whole_corpus",
-      "target_documents": [
-        "ALL"
-      ],
-      "requires_cross_document_reasoning": true,
-      "requires_global_sensemaking": true,
-      "requires_citations": true
-    },
-    {
       "id": "G12",
       "category": "global_sensemaking",
       "difficulty": "advanced",
@@ -724,81 +265,30 @@
       "requires_citations": true
     },
     {
-      "id": "G13",
-      "category": "global_sensemaking",
-      "difficulty": "advanced",
-      "question": "How does Rousseau's view of progress differ from a simple belief that civilization steadily improves human life?",
-      "expected_scope": "whole_corpus",
+      "id": "L16",
+      "category": "local_fact_retrieval",
+      "difficulty": "basic_to_intermediate",
+      "question": "Why does Rousseau criticize the progress of the arts and sciences?",
+      "expected_scope": "single_document",
       "target_documents": [
-        "ALL"
+        "Discourse on the Sciences and Arts"
       ],
-      "requires_cross_document_reasoning": true,
-      "requires_global_sensemaking": true,
+      "requires_cross_document_reasoning": false,
+      "requires_global_sensemaking": false,
       "requires_citations": true
     },
     {
-      "id": "G14",
-      "category": "global_sensemaking",
-      "difficulty": "advanced",
-      "question": "How does Rousseau describe the relationship between the individual and the community across his writings?",
-      "expected_scope": "whole_corpus",
+      "id": "C12",
+      "category": "cross_document_reasoning",
+      "difficulty": "intermediate_to_advanced",
+      "question": "How does Rousseau's view of human perfectibility contribute to both social progress and social corruption?",
+      "expected_scope": "multiple_documents",
       "target_documents": [
-        "ALL"
+        "Discourse on the Origin and Basis of Inequality Among Men",
+        "Discourse on the Sciences and Arts"
       ],
       "requires_cross_document_reasoning": true,
-      "requires_global_sensemaking": true,
-      "requires_citations": true
-    },
-    {
-      "id": "G15",
-      "category": "global_sensemaking",
-      "difficulty": "advanced",
-      "question": "What recurring tensions exist between independence and social cooperation in Rousseau's thought?",
-      "expected_scope": "whole_corpus",
-      "target_documents": [
-        "ALL"
-      ],
-      "requires_cross_document_reasoning": true,
-      "requires_global_sensemaking": true,
-      "requires_citations": true
-    },
-    {
-      "id": "G16",
-      "category": "global_sensemaking",
-      "difficulty": "advanced",
-      "question": "How does Rousseau's treatment of law, education, and custom show different ways societies shape individuals?",
-      "expected_scope": "whole_corpus",
-      "target_documents": [
-        "ALL"
-      ],
-      "requires_cross_document_reasoning": true,
-      "requires_global_sensemaking": true,
-      "requires_citations": true
-    },
-    {
-      "id": "G17",
-      "category": "global_sensemaking",
-      "difficulty": "advanced",
-      "question": "How does Rousseau explain the transformation from natural human beings into social and political persons?",
-      "expected_scope": "whole_corpus",
-      "target_documents": [
-        "ALL"
-      ],
-      "requires_cross_document_reasoning": true,
-      "requires_global_sensemaking": true,
-      "requires_citations": true
-    },
-    {
-      "id": "G18",
-      "category": "global_sensemaking",
-      "difficulty": "advanced",
-      "question": "What recurring causes of domination or loss of freedom does Rousseau identify across his corpus?",
-      "expected_scope": "whole_corpus",
-      "target_documents": [
-        "ALL"
-      ],
-      "requires_cross_document_reasoning": true,
-      "requires_global_sensemaking": true,
+      "requires_global_sensemaking": false,
       "requires_citations": true
     },
     {
@@ -815,6 +305,315 @@
       "requires_citations": true
     },
     {
+      "id": "L09",
+      "category": "local_fact_retrieval",
+      "difficulty": "basic_to_intermediate",
+      "question": "What role does law play in Rousseau's political theory?",
+      "expected_scope": "single_document",
+      "target_documents": [
+        "The Social Contract"
+      ],
+      "requires_cross_document_reasoning": false,
+      "requires_global_sensemaking": false,
+      "requires_citations": true
+    },
+    {
+      "id": "C04",
+      "category": "cross_document_reasoning",
+      "difficulty": "intermediate_to_advanced",
+      "question": "How does Rousseau's criticism of civilization in the Discourse on the Sciences and Arts compare with his political project in The Social Contract?",
+      "expected_scope": "multiple_documents",
+      "target_documents": [
+        "Discourse on the Sciences and Arts",
+        "The Social Contract"
+      ],
+      "requires_cross_document_reasoning": true,
+      "requires_global_sensemaking": false,
+      "requires_citations": true
+    },
+    {
+      "id": "G05",
+      "category": "global_sensemaking",
+      "difficulty": "advanced",
+      "question": "How are freedom, dependence, inequality, and political authority connected across Rousseau's works?",
+      "expected_scope": "whole_corpus",
+      "target_documents": [
+        "ALL"
+      ],
+      "requires_cross_document_reasoning": true,
+      "requires_global_sensemaking": true,
+      "requires_citations": true
+    },
+    {
+      "id": "L18",
+      "category": "local_fact_retrieval",
+      "difficulty": "basic_to_intermediate",
+      "question": "What does Rousseau say about natural education in Emile?",
+      "expected_scope": "single_document",
+      "target_documents": [
+        "Emile"
+      ],
+      "requires_cross_document_reasoning": false,
+      "requires_global_sensemaking": false,
+      "requires_citations": true
+    },
+    {
+      "id": "C15",
+      "category": "cross_document_reasoning",
+      "difficulty": "intermediate_to_advanced",
+      "question": "How does Rousseau treat authority differently in education and politics?",
+      "expected_scope": "multiple_documents",
+      "target_documents": [
+        "Emile",
+        "The Social Contract"
+      ],
+      "requires_cross_document_reasoning": true,
+      "requires_global_sensemaking": false,
+      "requires_citations": true
+    },
+    {
+      "id": "G10",
+      "category": "global_sensemaking",
+      "difficulty": "advanced",
+      "question": "What problems of civilization recur across Rousseau's major writings, and what responses does he propose?",
+      "expected_scope": "whole_corpus",
+      "target_documents": [
+        "ALL"
+      ],
+      "requires_cross_document_reasoning": true,
+      "requires_global_sensemaking": true,
+      "requires_citations": true
+    },
+    {
+      "id": "L20",
+      "category": "local_fact_retrieval",
+      "difficulty": "basic_to_intermediate",
+      "question": "How does Rousseau describe the relationship between dependence and freedom in education?",
+      "expected_scope": "single_document",
+      "target_documents": [
+        "Emile"
+      ],
+      "requires_cross_document_reasoning": false,
+      "requires_global_sensemaking": false,
+      "requires_citations": true
+    },
+    {
+      "id": "C18",
+      "category": "cross_document_reasoning",
+      "difficulty": "intermediate_to_advanced",
+      "question": "How does Rousseau's understanding of self-love change across his account of natural man, social man, and moral education?",
+      "expected_scope": "multiple_documents",
+      "target_documents": [
+        "Discourse on the Origin and Basis of Inequality Among Men",
+        "Emile"
+      ],
+      "requires_cross_document_reasoning": true,
+      "requires_global_sensemaking": false,
+      "requires_citations": true
+    },
+    {
+      "id": "G03",
+      "category": "global_sensemaking",
+      "difficulty": "advanced",
+      "question": "How does Rousseau explain the origins, development, and consequences of human inequality across his writings?",
+      "expected_scope": "whole_corpus",
+      "target_documents": [
+        "ALL"
+      ],
+      "requires_cross_document_reasoning": true,
+      "requires_global_sensemaking": true,
+      "requires_citations": true
+    },
+    {
+      "id": "L03",
+      "category": "local_fact_retrieval",
+      "difficulty": "basic_to_intermediate",
+      "question": "What does Rousseau mean when he says that sovereignty is inalienable?",
+      "expected_scope": "single_document",
+      "target_documents": [
+        "The Social Contract"
+      ],
+      "requires_cross_document_reasoning": false,
+      "requires_global_sensemaking": false,
+      "requires_citations": true
+    },
+    {
+      "id": "C06",
+      "category": "cross_document_reasoning",
+      "difficulty": "intermediate_to_advanced",
+      "question": "What relationship can be traced between Rousseau's concept of natural pity and his later ideas about moral or civic life?",
+      "expected_scope": "multiple_documents",
+      "target_documents": [
+        "Discourse on the Origin and Basis of Inequality Among Men",
+        "The Social Contract",
+        "Emile"
+      ],
+      "requires_cross_document_reasoning": true,
+      "requires_global_sensemaking": false,
+      "requires_citations": true
+    },
+    {
+      "id": "G14",
+      "category": "global_sensemaking",
+      "difficulty": "advanced",
+      "question": "How does Rousseau describe the relationship between the individual and the community across his writings?",
+      "expected_scope": "whole_corpus",
+      "target_documents": [
+        "ALL"
+      ],
+      "requires_cross_document_reasoning": true,
+      "requires_global_sensemaking": true,
+      "requires_citations": true
+    },
+    {
+      "id": "L15",
+      "category": "local_fact_retrieval",
+      "difficulty": "basic_to_intermediate",
+      "question": "What role does property play in Rousseau's account of the development of inequality?",
+      "expected_scope": "single_document",
+      "target_documents": [
+        "Discourse on the Origin and Basis of Inequality Among Men"
+      ],
+      "requires_cross_document_reasoning": false,
+      "requires_global_sensemaking": false,
+      "requires_citations": true
+    },
+    {
+      "id": "C09",
+      "category": "cross_document_reasoning",
+      "difficulty": "intermediate_to_advanced",
+      "question": "How does Rousseau's critique of luxury and refinement relate to his broader concern with inequality?",
+      "expected_scope": "multiple_documents",
+      "target_documents": [
+        "Discourse on the Sciences and Arts",
+        "Discourse on the Origin and Basis of Inequality Among Men"
+      ],
+      "requires_cross_document_reasoning": true,
+      "requires_global_sensemaking": false,
+      "requires_citations": true
+    },
+    {
+      "id": "G06",
+      "category": "global_sensemaking",
+      "difficulty": "advanced",
+      "question": "What different forms of human dependence appear across Rousseau's writings, and why do they matter?",
+      "expected_scope": "whole_corpus",
+      "target_documents": [
+        "ALL"
+      ],
+      "requires_cross_document_reasoning": true,
+      "requires_global_sensemaking": true,
+      "requires_citations": true
+    },
+    {
+      "id": "L07",
+      "category": "local_fact_retrieval",
+      "difficulty": "basic_to_intermediate",
+      "question": "What does Rousseau mean by civil freedom?",
+      "expected_scope": "single_document",
+      "target_documents": [
+        "The Social Contract"
+      ],
+      "requires_cross_document_reasoning": false,
+      "requires_global_sensemaking": false,
+      "requires_citations": true
+    },
+    {
+      "id": "C13",
+      "category": "cross_document_reasoning",
+      "difficulty": "intermediate_to_advanced",
+      "question": "How does Rousseau's idea of virtue differ between his critique of civilization and his theory of citizenship?",
+      "expected_scope": "multiple_documents",
+      "target_documents": [
+        "Discourse on the Sciences and Arts",
+        "The Social Contract"
+      ],
+      "requires_cross_document_reasoning": true,
+      "requires_global_sensemaking": false,
+      "requires_citations": true
+    },
+    {
+      "id": "G18",
+      "category": "global_sensemaking",
+      "difficulty": "advanced",
+      "question": "What recurring causes of domination or loss of freedom does Rousseau identify across his corpus?",
+      "expected_scope": "whole_corpus",
+      "target_documents": [
+        "ALL"
+      ],
+      "requires_cross_document_reasoning": true,
+      "requires_global_sensemaking": true,
+      "requires_citations": true
+    },
+    {
+      "id": "L11",
+      "category": "local_fact_retrieval",
+      "difficulty": "basic_to_intermediate",
+      "question": "What is natural pity in Rousseau's account of human nature?",
+      "expected_scope": "single_document",
+      "target_documents": [
+        "Discourse on the Origin and Basis of Inequality Among Men"
+      ],
+      "requires_cross_document_reasoning": false,
+      "requires_global_sensemaking": false,
+      "requires_citations": true
+    },
+    {
+      "id": "C07",
+      "category": "cross_document_reasoning",
+      "difficulty": "intermediate_to_advanced",
+      "question": "How does the development of property in the Discourse on Inequality connect to Rousseau's theory of legitimate political authority in The Social Contract?",
+      "expected_scope": "multiple_documents",
+      "target_documents": [
+        "Discourse on the Origin and Basis of Inequality Among Men",
+        "The Social Contract"
+      ],
+      "requires_cross_document_reasoning": true,
+      "requires_global_sensemaking": false,
+      "requires_citations": true
+    },
+    {
+      "id": "G08",
+      "category": "global_sensemaking",
+      "difficulty": "advanced",
+      "question": "What role does social comparison play across Rousseau's philosophy?",
+      "expected_scope": "whole_corpus",
+      "target_documents": [
+        "ALL"
+      ],
+      "requires_cross_document_reasoning": true,
+      "requires_global_sensemaking": true,
+      "requires_citations": true
+    },
+    {
+      "id": "L01",
+      "category": "local_fact_retrieval",
+      "difficulty": "basic_to_intermediate",
+      "question": "What does Rousseau mean by the general will?",
+      "expected_scope": "single_document",
+      "target_documents": [
+        "The Social Contract"
+      ],
+      "requires_cross_document_reasoning": false,
+      "requires_global_sensemaking": false,
+      "requires_citations": true
+    },
+    {
+      "id": "C14",
+      "category": "cross_document_reasoning",
+      "difficulty": "intermediate_to_advanced",
+      "question": "How does Rousseau's educational theory attempt to protect the individual from the corrupting influences he describes elsewhere?",
+      "expected_scope": "multiple_documents",
+      "target_documents": [
+        "Emile",
+        "Discourse on the Sciences and Arts",
+        "Discourse on the Origin and Basis of Inequality Among Men"
+      ],
+      "requires_cross_document_reasoning": true,
+      "requires_global_sensemaking": false,
+      "requires_citations": true
+    },
+    {
       "id": "G20",
       "category": "global_sensemaking",
       "difficulty": "advanced",
@@ -826,6 +625,235 @@
       "requires_cross_document_reasoning": true,
       "requires_global_sensemaking": true,
       "requires_citations": true
+    },
+    {
+      "id": "L02",
+      "category": "local_fact_retrieval",
+      "difficulty": "basic_to_intermediate",
+      "question": "How does Rousseau distinguish the general will from the will of all?",
+      "expected_scope": "single_document",
+      "target_documents": [
+        "The Social Contract"
+      ],
+      "requires_cross_document_reasoning": false,
+      "requires_global_sensemaking": false,
+      "requires_citations": true
+    },
+    {
+      "id": "C05",
+      "category": "cross_document_reasoning",
+      "difficulty": "intermediate_to_advanced",
+      "question": "How does Rousseau's treatment of education in Emile complement his account of citizenship in The Social Contract?",
+      "expected_scope": "multiple_documents",
+      "target_documents": [
+        "Emile",
+        "The Social Contract"
+      ],
+      "requires_cross_document_reasoning": true,
+      "requires_global_sensemaking": false,
+      "requires_citations": true
+    },
+    {
+      "id": "G02",
+      "category": "global_sensemaking",
+      "difficulty": "advanced",
+      "question": "How does Rousseau's conception of freedom develop across his major works?",
+      "expected_scope": "whole_corpus",
+      "target_documents": [
+        "ALL"
+      ],
+      "requires_cross_document_reasoning": true,
+      "requires_global_sensemaking": true,
+      "requires_citations": true
+    },
+    {
+      "id": "L13",
+      "category": "local_fact_retrieval",
+      "difficulty": "basic_to_intermediate",
+      "question": "What is amour de soi in Rousseau's account of human motivation?",
+      "expected_scope": "single_document",
+      "target_documents": [
+        "Discourse on the Origin and Basis of Inequality Among Men"
+      ],
+      "requires_cross_document_reasoning": false,
+      "requires_global_sensemaking": false,
+      "requires_citations": true
+    },
+    {
+      "id": "C11",
+      "category": "cross_document_reasoning",
+      "difficulty": "intermediate_to_advanced",
+      "question": "How does Rousseau connect social comparison with political inequality across his writings?",
+      "expected_scope": "multiple_documents",
+      "target_documents": [
+        "Discourse on the Origin and Basis of Inequality Among Men",
+        "The Social Contract"
+      ],
+      "requires_cross_document_reasoning": true,
+      "requires_global_sensemaking": false,
+      "requires_citations": true
+    },
+    {
+      "id": "G09",
+      "category": "global_sensemaking",
+      "difficulty": "advanced",
+      "question": "How does Rousseau distinguish natural conditions from artificial or socially created conditions across his works?",
+      "expected_scope": "whole_corpus",
+      "target_documents": [
+        "ALL"
+      ],
+      "requires_cross_document_reasoning": true,
+      "requires_global_sensemaking": true,
+      "requires_citations": true
+    },
+    {
+      "id": "L08",
+      "category": "local_fact_retrieval",
+      "difficulty": "basic_to_intermediate",
+      "question": "How does Rousseau describe moral freedom?",
+      "expected_scope": "single_document",
+      "target_documents": [
+        "The Social Contract"
+      ],
+      "requires_cross_document_reasoning": false,
+      "requires_global_sensemaking": false,
+      "requires_citations": true
+    },
+    {
+      "id": "C10",
+      "category": "cross_document_reasoning",
+      "difficulty": "intermediate_to_advanced",
+      "question": "How does Rousseau's concept of freedom differ when discussing the natural human, the citizen, and the child?",
+      "expected_scope": "multiple_documents",
+      "target_documents": [
+        "Discourse on the Origin and Basis of Inequality Among Men",
+        "The Social Contract",
+        "Emile"
+      ],
+      "requires_cross_document_reasoning": true,
+      "requires_global_sensemaking": false,
+      "requires_citations": true
+    },
+    {
+      "id": "G13",
+      "category": "global_sensemaking",
+      "difficulty": "advanced",
+      "question": "How does Rousseau's view of progress differ from a simple belief that civilization steadily improves human life?",
+      "expected_scope": "whole_corpus",
+      "target_documents": [
+        "ALL"
+      ],
+      "requires_cross_document_reasoning": true,
+      "requires_global_sensemaking": true,
+      "requires_citations": true
+    },
+    {
+      "id": "L17",
+      "category": "local_fact_retrieval",
+      "difficulty": "basic_to_intermediate",
+      "question": "How does Rousseau connect luxury with moral corruption?",
+      "expected_scope": "single_document",
+      "target_documents": [
+        "Discourse on the Sciences and Arts"
+      ],
+      "requires_cross_document_reasoning": false,
+      "requires_global_sensemaking": false,
+      "requires_citations": true
+    },
+    {
+      "id": "C16",
+      "category": "cross_document_reasoning",
+      "difficulty": "intermediate_to_advanced",
+      "question": "How does Rousseau's account of natural independence relate to his concern with social domination?",
+      "expected_scope": "multiple_documents",
+      "target_documents": [
+        "Discourse on the Origin and Basis of Inequality Among Men",
+        "The Social Contract"
+      ],
+      "requires_cross_document_reasoning": true,
+      "requires_global_sensemaking": false,
+      "requires_citations": true
+    },
+    {
+      "id": "G07",
+      "category": "global_sensemaking",
+      "difficulty": "advanced",
+      "question": "How does Rousseau's understanding of human nature support his political and educational theories?",
+      "expected_scope": "whole_corpus",
+      "target_documents": [
+        "ALL"
+      ],
+      "requires_cross_document_reasoning": true,
+      "requires_global_sensemaking": true,
+      "requires_citations": true
+    },
+    {
+      "id": "L19",
+      "category": "local_fact_retrieval",
+      "difficulty": "basic_to_intermediate",
+      "question": "What role does experience play in Rousseau's theory of education?",
+      "expected_scope": "single_document",
+      "target_documents": [
+        "Emile"
+      ],
+      "requires_cross_document_reasoning": false,
+      "requires_global_sensemaking": false,
+      "requires_citations": true
+    },
+    {
+      "id": "C17",
+      "category": "cross_document_reasoning",
+      "difficulty": "intermediate_to_advanced",
+      "question": "How do Rousseau's ideas about law and education both attempt to shape human behavior without relying solely on force?",
+      "expected_scope": "multiple_documents",
+      "target_documents": [
+        "The Social Contract",
+        "Emile"
+      ],
+      "requires_cross_document_reasoning": true,
+      "requires_global_sensemaking": false,
+      "requires_citations": true
+    },
+    {
+      "id": "G16",
+      "category": "global_sensemaking",
+      "difficulty": "advanced",
+      "question": "How does Rousseau's treatment of law, education, and custom show different ways societies shape individuals?",
+      "expected_scope": "whole_corpus",
+      "target_documents": [
+        "ALL"
+      ],
+      "requires_cross_document_reasoning": true,
+      "requires_global_sensemaking": true,
+      "requires_citations": true
     }
-  ]
+  ],
+  "provenance": {
+    "run_id": "rousseau-20261122-budget20-adaptive",
+    "base_run_id": "rousseau-20261122-budget1466-r2",
+    "corpus_id": "sha256:b91706554b00dfe8197166f5294d063ea1b911eb2d6330a41c075d0cf747a9e3",
+    "source_commit": "8efd734dea56383e6665261e58dabda04bd1d621",
+    "index_ids": {
+      "index-vector": "sha256:40f13a83a603409d6febe5edd44a5748a142563e304f257075f581f916545aae",
+      "index-graph": "sha256:005e68b6b8db2ded1498b80ce08c0203b81c30e8bd16f26b008bacf62e36cd16"
+    },
+    "index_content_ids": {
+      "index-vector": "sha256:e3a289fc9720d464b8111d7eff3cee728a0838e1dd96625e2d780bc12286f942",
+      "index-graph": "sha256:005e68b6b8db2ded1498b80ce08c0203b81c30e8bd16f26b008bacf62e36cd16"
+    },
+    "original_question_count": 60,
+    "original_questions_sha256": "612ec52cc79cdfd1f0983f2a3e438c53ffc673198227178ad2ea88398b1b0c2c",
+    "code_sha256": {
+      "run_partial.py": "73733ebfc4d44d2803abf25687102eb7ba5efbfa4905792441521a50896faec2",
+      "budget_gateway.py": "3d15f9315d0fd915d1adfad21e30845de8ffb4264953006043421e9c4602cf54",
+      "test_budget.py": "12c3add329f0c3dc1d35ca7bb8e29cb6589ace825c73e5e2694e5220a84b7bfb",
+      "run_vector_rag.py": "95a02714a66bb762a08ecc52b6ac60f37c166455e1ccd9faff967258e828ab12",
+      "run_graphrag.py": "c6fa061bc94001dcea4d00d7da4055a740200347f4e6966e94dfdf2d9b73d21d",
+      "evaluate.py": "507f66d01455a5784bd1653eb675c2cf127fa7de16771a2d95fb3fe0279a54a4",
+      "analysis.py": "3522d81d96dd821bc0329856bebc0eeb99e60d4cf4c8a63e295a32266cd1add3"
+    },
+    "sampling_seed": 20261122,
+    "selection_method": "Seeded shuffle within each category; round-robin categories; stop based on remaining budget, never judge outcomes.",
+    "execution_change": "Generate both answers and all 12 judgments for each question before the next question. Prompts, models, indexes, rubric and three votes per criterion are unchanged. Latencies include instrumented API transport and GraphRAG CLI startup."
+  }
 }

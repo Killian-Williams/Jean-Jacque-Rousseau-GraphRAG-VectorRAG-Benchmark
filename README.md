@@ -4,7 +4,7 @@
 
 A comparison of Microsoft's GraphRAG and a vector RAG baseline for answering questions about Jean-Jacques Rousseau's political and philosophical writings.
 
-**Takeaway:** The saved evaluation favors GraphRAG on all four criteria, while vector RAG answers substantially faster. See [Results](#results) for the figures and their limitations.
+**Takeaway:** The new controlled run favors GraphRAG for comprehensiveness, diversity and empowerment; vector RAG wins on directness and answers substantially faster. See [Results](#results) for the figures and their limitations.
 
 [Quick start](#quick-start) · [How it works](#how-it-works) · [Source texts](#source-texts) · [Evaluation method](#evaluation-method) · [Results](#results) · [Answer example](#answer-example) · [Artifacts](#explore-the-artifacts) · [Offline analysis](#analyze-saved-results)
 
@@ -99,58 +99,68 @@ Each judgment records a preferred answer (or a tie) and a written explanation, r
 
 ## Results
 
-**Correction:** These figures supersede an earlier artifact set reporting 77.08% GraphRAG preference. The current set reports 92.50%, including a reversal of the directness result; the saved vector answers and judge evaluations changed. This is a corrected saved-results snapshot, not a newly controlled benchmark. See the [release notes](RELEASE_NOTES.md).
+The **2026-11-22 controlled rerun** completed the same 60 questions, both answer sets and all 720 judging votes. Both indexes used identical prepared `Social_Contract.txt`, `discourse.txt` and `emile.txt` files. See [run provenance](benchmark/provenance/2026-11-22/run.json). Edition completeness and historical corpus equivalence remain unverified.
 
 ```mermaid
 pie showData
-    title Judge preference across 240 question-and-criterion decisions
-    "GraphRAG (222 wins)" : 222
-    "Vector RAG (18 wins)" : 18
+    title New run: 240 question-and-criterion majority decisions
+    "GraphRAG (190 wins)" : 190
+    "Vector RAG (50 wins)" : 50
 ```
 
-| Criterion | GraphRAG wins | Vector RAG wins |
+| Criterion | New GraphRAG wins | New Vector RAG wins | Historical GraphRAG wins |
+|---|---:|---:|---:|
+| Comprehensiveness | 60/60 (100%) | 0/60 (0%) | 60/60 (100%) |
+| Diversity | 60/60 (100%) | 0/60 (0%) | 60/60 (100%) |
+| Empowerment | 55/60 (91.67%) | 5/60 (8.33%) | 57/60 (95%) |
+| Directness | 15/60 (25%) | 45/60 (75%) | 45/60 (75%) |
+| **Overall** | **190/240 (79.17%)** | **50/240 (20.83%)** | **222/240 (92.50%)** |
+
+Three votes determine each question/criterion majority. All 240 decisions are complete, with no ties or no-majority outcomes. These percentages describe judge preference, not factual accuracy or the percentage of questions answered correctly.
+
+| Recorded mean response time | Historical run | New run |
 |---|---:|---:|
-| Comprehensiveness | 100.00% (60/60) | 0.00% (0/60) |
-| Diversity | 100.00% (60/60) | 0.00% (0/60) |
-| Empowerment | 95.00% (57/60) | 5.00% (3/60) |
-| Directness | 75.00% (45/60) | 25.00% (15/60) |
-| **Overall** | **92.50% (222/240)** | **7.50% (18/240)** |
+| Vector RAG | 6.971 s | 7.297 s |
+| GraphRAG global search | 656.376 s | 424.375 s |
 
-Both systems returned answers for all 60 questions. The saved evaluation file contains 720 completed judgments and 13 error records, producing 240 majority decisions. Error records are excluded from voting. There were no ties or incomplete decisions. Overall percentages pool four criteria per question; they are not the percentage of questions answered correctly.
+New median times: Vector RAG 7.143 seconds; GraphRAG 409.019 seconds. GraphRAG took about 58 times longer on average. Timing includes GraphRAG CLI startup and the local cost-control proxy; API rate limits, caching and local processing affect it.
 
-| Recorded response time | Vector RAG | GraphRAG |
+| Question category | New GraphRAG wins | New Vector RAG wins |
 |---|---:|---:|
-| Mean | 6.97 s | 656.38 s (10.94 min) |
-| Median | 6.78 s | 652.82 s (10.88 min) |
+| Local fact retrieval | 61/80 (76.25%) | 19/80 (23.75%) |
+| Cross-document reasoning | 65/80 (81.25%) | 15/80 (18.75%) |
+| Global sensemaking | 64/80 (80%) | 16/80 (20%) |
 
-### Results by question category
+Each category contains 20 questions and four criteria.
 
-| Measure | Vector RAG | GraphRAG |
-| --- | --- | --- |
-| Local fact retrieval | 6.25% (5/80) | 93.75% (75/80) |
-| Cross-document reasoning | 5.00% (4/80) | 95.00% (76/80) |
-| Global sensemaking | 11.25% (9/80) | 88.75% (71/80) |
+### What changed from the historical run?
 
-Each category contains 20 questions evaluated on four criteria, giving 80 majority decisions per category.
+GraphRAG's overall preference fell from 92.50% to 79.17%, primarily because its directness wins fell from 45 to 15; empowerment wins fell from 57 to 55. Comprehensiveness and diversity were unchanged. Mean answer lengths changed from approximately 481 to 341 whitespace-separated words for Vector RAG, and 965 to 971 for GraphRAG. Shorter vector answers are consistent with the directness outcome, but do not establish its cause.
 
-**Interpretation:** GraphRAG was preferred on all four criteria but took approximately 94 times longer on average. Whether the extra response time is worthwhile depends on the application. Total API cost and indexing time were not measured, so financial cost-effectiveness cannot be assessed.
+The questions are unchanged. New indexes, answers and judgments were generated. Questions were shuffled within category with seed 20261122 and processed in round-robin category order, with both answers and 12 judgments completed before the next question. All 60 finished; no budget-selected subset is reported. The controller and generation/evaluation code are archived with the [run provenance](benchmark/provenance/2026-11-22/).
 
-GraphRAG timing includes command-line subprocess startup for each question; vector RAG timing covers a direct function call. These measurements describe this run, not general performance guarantees. Judge preferences do not establish factual accuracy, citation correctness, or faithfulness to Rousseau's writings. Differences in prompts, chunking, and context budgets also limit attribution of the results solely to retrieval architecture.
+The historical corpus cannot be conclusively linked to its published answers. Surviving Rousseau indexes contained `reveries.txt` and differing Social Contract material. A separate Spinoza database existed, but there is no evidence connecting it to the published Rousseau answers. It would be incorrect to claim that the old benchmark definitely used the wrong book, or that removing Reveries caused the score change. The new run verifies input-byte equality, not complete or authenticated editions; `emile.txt` includes Books I–III headings and commentary. See the [corpus audit](CORPUS_PROVENANCE.md).
 
-See the [summary JSON](benchmark/analysis_results/summary.json), [criterion results](benchmark/analysis_results/metric_summary.csv), [category results](benchmark/analysis_results/category_summary.csv), and [latency results](benchmark/analysis_results/latency_summary.csv).
+Cumulative token-based accounted cost was **$13.96298025**, including index builds, retries, samples and judging, with a retained $0.05534 unresolved reservation. It is an estimate, not a provider invoice. The answer-and-judging continuation took about 7 hours 48 minutes. Costs are not guaranteed for future runs.
+
+### Historical archive
+
+The [v1.0.0 artifact archive](archives/v1.0.0/) preserves the previous answers, evaluations, summaries, analysis script and manifest. The existing [v1.0.0 release](https://github.com/Killian-Williams/Jean-Jacque-Rousseau-GraphRAG-VectorRAG-Benchmark/releases/tag/v1.0.0) is unchanged. Its 92.50% result had superseded an earlier 77.08% artifact set; that earlier correction is distinct from this new controlled experiment. See [release notes](RELEASE_NOTES.md).
+
+See the [current summary](benchmark/analysis_results/summary.json) and [historical summary](archives/v1.0.0/benchmark/analysis_results/summary.json). Judge preferences do not verify source grounding, citation correctness or factual accuracy. Differences between runs cannot isolate retrieval architecture or corpus changes as the cause.
 
 ## Answer example
 
 **Question L01:** What does Rousseau mean by the general will?
 
-The following are opening excerpts from the saved answers, reproduced verbatim. They illustrate presentation style; they are not independently verified explanations of Rousseau.
+Opening excerpts from the new saved answers illustrate presentation style, not independently verified correctness.
 
-| Vector RAG | GraphRAG — global search |
+| Vector RAG | GraphRAG global search |
 |---|---|
-| Rousseau's concept of the General Will is a foundational idea in his political philosophy, particularly as articulated in his work, *The Social Contract*. The General Will represents the collective will of the citizenry aimed at the common good, transcending individual interests. It is essential to understand that the General Will is not merely the sum of individual wills (which Rousseau refers to as the "Will of All"), but rather a unified expression of the collective interest that seeks the welfare of the community as a whole. | Jean-Jacques Rousseau's concept of the *general will* is a foundational and central idea in his political philosophy, representing the collective sovereignty of the people as a unified body aimed at the common good and public interest. |
-| **Recorded response time:** 9.757 s | **Recorded response time:** 705.086 s |
+| Rousseau’s concept of the general will refers to the collective will of the citizens that aims at the common interest or the common good, rather than the sum of individual or private interests. According to the excerpts:  - The general will "considers only the common interest," distinguishing it from the "will of all," which is merely the aggregate of particular wills that include private interests. When the private interests cancel each other ou… | # Rousseau's Concept of the General Will  Jean-Jacques Rousseau's concept of the **General Will** is a cornerstone of his political philosophy representing the collective interest and sovereign authority of the people. It is a complex and nuanced idea that distinguishes the unified political will of the community from the mere sum of individual desires or factional interests. Below is a comprehensive explanation synthesizing multiple aspects and … |
+| 7.053 s | 412.562 s |
 
-The full vector answer continues with further explanation. The full GraphRAG answer expands into sections on sovereignty, liberty, institutions, and private interests, with internal report references. Read both complete responses in the [vector answer file](benchmark/vector_answers.json) and [GraphRAG answer file](benchmark/graphrag_answers.json); search for `L01`.
+Full responses: [Vector RAG](benchmark/vector_answers.json) and [GraphRAG](benchmark/graphrag_answers.json), question `L01`.
 
 ## Explore the artifacts
 
@@ -225,7 +235,7 @@ This command makes **no API calls**. It creates `runs/rousseau-001/` containing 
 
 ### 4. Build both indexes and ask a sample question (paid)
 
-**Live testing and the new benchmark are deferred until API funding and reliable internet are available.** The commands below are the executable path for that later run; successful end-to-end live generation has not yet been verified.
+**Live Windows/Python 3.12 verification completed on 2026-11-22:** both indexes, both samples and the full 60-question benchmark succeeded from a clean checkout. The first attempt required recovery from a Windows/OneDrive ledger-file lock; execution continued outside OneDrive with cached extraction responses and the verified vector index. The benchmark used an additional budget controller, archived under [run provenance](benchmark/provenance/2026-11-22/). This was not an uninterrupted execution of every command below.
 
 ```sh
 python scripts/experiment.py index-vector --run-id rousseau-001 --allow-api
@@ -243,7 +253,7 @@ python scripts/experiment.py evaluate --run-id rousseau-001 --allow-api
 python scripts/experiment.py analyze --run-id rousseau-001
 ```
 
-`answers` runs all 60 questions through both systems. `evaluate` requests three judge votes for each of four criteria: 720 judgments before retries. Both stages incur API charges. The historical GraphRAG question run alone took roughly 11 hours; vector questions took roughly 7 minutes in total. Evaluation duration and total cost are unmeasured. Analysis takes seconds and makes no API calls.
+`answers` runs all 60 questions through both systems. `evaluate` requests three judge votes for each of four criteria: 720 judgments before retries. Both stages incur API charges. The new answer-and-judging continuation took about 7 hours 48 minutes. Cumulative indexing, retries, samples and benchmark accounted cost was about $13.96; future costs and times can vary. Analysis takes seconds and makes no API calls.
 
 Outputs are `runs/rousseau-001/benchmark/vector_answers.json`, `graphrag_answers.json`, `evaluations.json`, and `analysis_results/summary.json` plus CSV tables. Stage logs sit beside `run.json`. Each paid stage requires `--allow-api`; snapshots and completed outputs are checked before later stages. An attempted stage cannot be rerun in place: preserve failed logs and create a new run ID. Index changes also stop the run for inspection. Do not directly run the original benchmark generators at the repository root, as they write over the published filenames.
 
@@ -280,7 +290,7 @@ Generated databases, caches, logs, and full indexing outputs are excluded. They 
 
 Run `python scripts/check_repository.py` to verify configured prompt paths, JSON structure, matching benchmark/question IDs, evaluation coverage, saved-summary regeneration, and release artifact fingerprints. Run `python -m unittest discover -s tests -v` to exercise the failure checks, preparation, and paid-stage guard. These commands use only Python's standard library and make no paid API calls. GitHub Actions also installs the pinned dependencies and runs corpus preparation and ingestion dry-run on Python 3.12. These checks do not establish successful live indexing or generation.
 
-The [v1.0.0 release](https://github.com/Killian-Williams/Jean-Jacque-Rousseau-GraphRAG-VectorRAG-Benchmark/releases/tag/v1.0.0) preserves this saved-results snapshot. [Release metadata](benchmark/release-manifest.json) records artifact hashes; it does not establish the missing original index-to-answer linkage. See [release notes](RELEASE_NOTES.md).
+The [historical archive](archives/v1.0.0/) preserves v1.0.0. [Current snapshot metadata](benchmark/release-manifest.json) records the new artifact hashes. See [release notes](RELEASE_NOTES.md).
 
 ## Limitations
 

@@ -1,3 +1,13 @@
+# 2026-11-22 — Controlled 60-question rerun
+
+Current benchmark artifacts now contain the new complete run: 190/240 GraphRAG preferences (79.17%), 50/240 Vector RAG preferences (20.83%). GraphRAG wins 60/60 comprehensiveness, 60/60 diversity, 55/60 empowerment and 15/60 directness decisions. All 720 judging votes completed.
+
+Both systems used the same hashed three-file corpus and verified index snapshots. Edition completeness remains unverified. The historical answers are not proven to come from the wrong book, and the score change cannot be attributed solely to corpus changes. See README results and benchmark/provenance/2026-11-22/run.json.
+
+Previous published artifacts are preserved under archives/v1.0.0; the existing Git tag and release are unchanged. No new versioned release is implied by this results update.
+
+---
+
 # v1.0.0 — Saved benchmark results and offline validation
 
 This release preserves the current 60-question Vector RAG versus Microsoft GraphRAG global-search comparison, including saved answers, judge evaluations, regenerated summaries, and artifact fingerprints.
